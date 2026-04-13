@@ -372,9 +372,11 @@ export default function WeddingPage() {
     setWishLoading(true);
     setWishError(false);
 
-    const { error } = await supabase
+    const { data: inserted, error } = await supabase
       .from("wishes")
-      .insert({ name: wishName.trim(), message: wishMessage.trim() });
+      .insert({ name: wishName.trim(), message: wishMessage.trim() })
+      .select()
+      .single();
 
     setWishLoading(false);
 
@@ -384,7 +386,13 @@ export default function WeddingPage() {
       return;
     }
 
-    // Realtime subscription will prepend the new wish automatically
+    // Immediately prepend so it shows without waiting for realtime
+    if (inserted) {
+      setWishes((prev) => {
+        if (prev.some((w) => w.id === (inserted as Wish).id)) return prev;
+        return [inserted as Wish, ...prev];
+      });
+    }
     setWishName("");
     setWishMessage("");
     setWishSuccess(true);
