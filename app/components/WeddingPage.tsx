@@ -299,6 +299,17 @@ function CopyButton({ value }: { value: string }) {
 
 /* ── main component ───────────────────────────────────────── */
 // Deterministic overlay particles (no Math.random to avoid hydration mismatch)
+/* ── Gallery items ────────────────────────────────────────── */
+const GALLERY_ITEMS = [
+  { src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700&auto=format&fit=crop", label: "First Meet",     w: 220, h: 330, yOffset:  30 },
+  { src: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=700&auto=format&fit=crop", label: "Falling In Love", w: 290, h: 210, yOffset: -30 },
+  { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=700&auto=format&fit=crop", label: "Engagement",     w: 200, h: 390, yOffset:  60 },
+  { src: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=700&auto=format&fit=crop", label: "Pre-Wedding",    w: 310, h: 250, yOffset: -50 },
+  { src: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=700&auto=format&fit=crop", label: "The Ceremony",   w: 240, h: 370, yOffset:  20 },
+  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=700&auto=format&fit=crop", label: "Reception",      w: 270, h: 290, yOffset: -20 },
+  { src: "https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=700&auto=format&fit=crop", label: "Forever After",  w: 225, h: 345, yOffset:  45 },
+];
+
 const OVERLAY_PARTICLES = Array.from({ length: 22 }, (_, i) => {
   const seed = (i * 137.508 + 42) % 1;
   const x = ((i * 47 + 11) % 97) + 1.5;
@@ -326,6 +337,7 @@ export default function WeddingPage() {
   const [wishError, setWishError] = useState(false);
   const [wishLoading, setWishLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const gallerySectionRef = useRef<HTMLElement>(null);
   const countdown = useCountdown();
 
   // Scroll-based parallax for hero
@@ -334,6 +346,15 @@ export default function WeddingPage() {
   const heroBgY = useSpring(rawHeroBgY, { stiffness: 50, damping: 18 });
   const rawHeroTextY = useTransform(scrollY, [0, 700], [0, -80]);
   const heroTextY = useSpring(rawHeroTextY, { stiffness: 50, damping: 18 });
+
+  // Gallery horizontal scroll
+  const { scrollYProgress: galleryProgress } = useScroll({
+    target: gallerySectionRef,
+    offset: ["start start", "end end"],
+  });
+  const rawGalleryX = useTransform(galleryProgress, [0, 1], ["0vw", "-62vw"]);
+  const galleryTrackX = useSpring(rawGalleryX, { stiffness: 55, damping: 22 });
+  const galleryLabelOpacity = useTransform(galleryProgress, [0, 0.05], [0, 1]);
 
   /* lock body scroll during overlay */
   useEffect(() => {
@@ -1012,51 +1033,99 @@ export default function WeddingPage() {
           </div>
         </section>
 
-        {/* ── GALLERY — with per-image parallax ─────────────── */}
-        <section id="gallery" className="py-32 px-6 bg-[#080808]">
-          <div className="max-w-6xl mx-auto">
-            <Reveal className="text-center mb-20">
-              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-600 font-medium mb-4">A glimpse into our story</p>
-              <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2.5rem, 5vw, 3.75rem)", fontWeight: 300, color: "#f0ece4" }}>
-                Our Moments
-              </h2>
-            </Reveal>
+        {/* ── GALLERY — horizontal scroll timeline ─────────────── */}
+        <section
+          id="gallery"
+          ref={gallerySectionRef}
+          style={{ height: "280vh", background: "#080808" }}
+          className="border-t border-white/[0.04]"
+        >
+          {/* Sticky viewport */}
+          <div className="sticky top-0 overflow-hidden" style={{ height: "100vh" }}>
 
+            {/* Top bar */}
             <motion.div
-              className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"
-              variants={stagger(0.08)}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
+              style={{ opacity: galleryLabelOpacity }}
+              className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-8 pt-10 pb-0"
             >
-              {/* Col 1 */}
-              <div className="flex flex-col gap-3 md:gap-4">
-                <motion.div variants={fadeUp} className="aspect-[2/3]">
-                  <ParallaxImage src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop" alt="" className="h-full" />
-                </motion.div>
-                <motion.div variants={fadeUp} className="aspect-square">
-                  <ParallaxImage src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=800&auto=format&fit=crop" alt="" className="h-full" />
-                </motion.div>
+              <div>
+                <p className="text-[9px] tracking-[0.5em] uppercase text-stone-700 mb-2">A glimpse into our story</p>
+                <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)", fontWeight: 300, color: "#f0ece4" }}>
+                  Our Moments
+                </h2>
               </div>
-              {/* Col 2 */}
-              <div className="flex flex-col gap-3 md:gap-4 md:mt-10">
-                <motion.div variants={fadeUp} className="aspect-square">
-                  <ParallaxImage src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=800&auto=format&fit=crop" alt="" className="h-full" />
-                </motion.div>
-                <motion.div variants={fadeUp} className="aspect-[2/3]">
-                  <ParallaxImage src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="" className="h-full" />
-                </motion.div>
-              </div>
-              {/* Col 3 */}
-              <div className="hidden md:flex flex-col gap-4">
-                <motion.div variants={fadeUp} className="aspect-[2/3]">
-                  <ParallaxImage src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=800&auto=format&fit=crop" alt="" className="h-full" />
-                </motion.div>
-                <motion.div variants={fadeUp} className="aspect-square">
-                  <ParallaxImage src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=800&auto=format&fit=crop" alt="" className="h-full" />
-                </motion.div>
-              </div>
+              <p className="text-[8px] tracking-[0.35em] uppercase text-stone-700 mb-1.5">Scroll to explore →</p>
             </motion.div>
+
+            {/* Horizontal track */}
+            <motion.div
+              style={{
+                x: galleryTrackX,
+                position: "absolute",
+                bottom: 0,
+                paddingLeft: "12vw",
+                paddingRight: "20vw",
+                paddingBottom: "72px",
+                gap: "48px",
+                display: "flex",
+                alignItems: "flex-end",
+                height: "100%",
+              }}
+            >
+              {GALLERY_ITEMS.map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="flex-shrink-0 flex flex-col"
+                  initial={{ opacity: 0, y: item.yOffset + 40 }}
+                  whileInView={{ opacity: 1, y: item.yOffset }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {/* Image */}
+                  <div
+                    className="overflow-hidden group"
+                    style={{ width: item.w, height: item.h, flexShrink: 0 }}
+                  >
+                    <motion.img
+                      src={item.src}
+                      alt={item.label}
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.04 }}
+                      transition={{ duration: 0.7, ease: "easeOut" }}
+                    />
+                  </div>
+
+                  {/* Chapter number + label */}
+                  <div className="mt-5" style={{ width: item.w }}>
+                    <p className="text-[8px] tracking-[0.4em] uppercase text-stone-800 mb-1">
+                      0{i + 1}
+                    </p>
+                    <p
+                      className="text-stone-800 leading-none whitespace-nowrap"
+                      style={{
+                        fontFamily: "var(--font-cormorant), serif",
+                        fontSize: "clamp(1.6rem, 3.5vw, 3rem)",
+                        fontWeight: 300,
+                        letterSpacing: "0.02em",
+                      }}
+                    >
+                      {item.label}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Progress bar at bottom */}
+            <div className="absolute bottom-5 left-8 right-8 flex items-center gap-4">
+              <motion.div
+                className="h-px bg-stone-800/60 flex-1 origin-left"
+                style={{ scaleX: galleryProgress }}
+              />
+              <span className="text-[8px] tracking-[0.3em] uppercase text-stone-800 shrink-0">
+                {GALLERY_ITEMS.length} moments
+              </span>
+            </div>
           </div>
         </section>
 
