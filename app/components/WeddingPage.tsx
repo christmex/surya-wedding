@@ -613,9 +613,12 @@ export default function WeddingPage() {
                 <span className="block overflow-hidden">
                   <motion.span variants={lineReveal} className="block">Ardy Surya</motion.span>
                 </span>
+                <motion.span variants={lineReveal} className="block italic" style={{ color: "rgba(201,169,110,0.8)", fontWeight: 300 }}>
+                  &amp;
+                </motion.span>
                 <span className="block overflow-hidden">
                   <motion.span variants={lineReveal} className="block italic" style={{ color: "rgba(201,169,110,0.8)", fontWeight: 300 }}>
-                    &amp; Mila Arinda
+                    Mila Arinda
                   </motion.span>
                 </span>
               </motion.h1>
@@ -817,9 +820,9 @@ export default function WeddingPage() {
               <span className="block overflow-hidden">
                 <motion.span variants={lineReveal} className="block">Ardy Surya</motion.span>
               </span>
-              <span className="block overflow-hidden mt-1">
+              <span className="italic" style={{ color: "rgba(201, 169, 110, 0.6)", fontWeight: 300 }}>&amp; </span>
+              <span className="block overflow-hidden mt-1" style={{ color: "rgba(201, 169, 110, 0.6)", fontWeight: 300 }}>
                 <motion.span variants={lineReveal} className="block">
-                  <span className="italic" style={{ color: "rgba(201, 169, 110, 0.6)", fontWeight: 300 }}>&amp; </span>
                   Mila Arinda
                 </motion.span>
               </span>
