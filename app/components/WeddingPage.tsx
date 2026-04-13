@@ -336,6 +336,7 @@ export default function WeddingPage() {
   const [wishSuccess, setWishSuccess] = useState(false);
   const [wishError, setWishError] = useState(false);
   const [wishLoading, setWishLoading] = useState(false);
+  const [hoveredGallery, setHoveredGallery] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const gallerySectionRef = useRef<HTMLElement>(null);
   const countdown = useCountdown();
@@ -1062,36 +1063,48 @@ export default function WeddingPage() {
               style={{
                 x: galleryTrackX,
                 position: "absolute",
-                bottom: 0,
+                top: 0,
                 paddingLeft: "12vw",
                 paddingRight: "20vw",
-                paddingBottom: "72px",
+                paddingTop: "120px",
+                paddingBottom: "100px",
                 gap: "48px",
                 display: "flex",
-                alignItems: "flex-end",
+                alignItems: "center",
                 height: "100%",
               }}
             >
               {GALLERY_ITEMS.map((item, i) => (
                 <motion.div
                   key={i}
-                  className="flex-shrink-0 flex flex-col"
+                  className="flex-shrink-0 flex flex-col cursor-pointer"
                   initial={{ opacity: 0, y: item.yOffset + 40 }}
-                  whileInView={{ opacity: 1, y: item.yOffset }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.1, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  animate={{
+                    opacity: hoveredGallery === null ? 1 : hoveredGallery === i ? 1 : 0.45,
+                    y: item.yOffset,
+                    scale: hoveredGallery === null ? 1 : hoveredGallery === i ? 1.06 : 0.93,
+                    filter: hoveredGallery !== null && hoveredGallery !== i ? "blur(1px)" : "blur(0px)",
+                  }}
+                  transition={{
+                    opacity: { duration: hoveredGallery !== null ? 0.35 : 1.0, delay: hoveredGallery !== null ? 0 : i * 0.08, ease: "easeOut" },
+                    y: { duration: 1.1, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] },
+                    scale: { duration: 0.4, ease: "easeOut" },
+                    filter: { duration: 0.4, ease: "easeOut" },
+                  }}
+                  onHoverStart={() => setHoveredGallery(i)}
+                  onHoverEnd={() => setHoveredGallery(null)}
                 >
                   {/* Image */}
                   <div
-                    className="overflow-hidden group"
+                    className="overflow-hidden"
                     style={{ width: item.w, height: item.h, flexShrink: 0 }}
                   >
                     <motion.img
                       src={item.src}
                       alt={item.label}
                       className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.04 }}
-                      transition={{ duration: 0.7, ease: "easeOut" }}
+                      animate={{ scale: hoveredGallery === i ? 1.08 : 1 }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
                     />
                   </div>
 
@@ -1104,7 +1117,7 @@ export default function WeddingPage() {
                       className="text-stone-800 leading-none whitespace-nowrap"
                       style={{
                         fontFamily: "var(--font-cormorant), serif",
-                        fontSize: "clamp(1.6rem, 3.5vw, 3rem)",
+                        fontSize: "clamp(1rem, 1.8vw, 1.5rem)",
                         fontWeight: 300,
                         letterSpacing: "0.02em",
                       }}
