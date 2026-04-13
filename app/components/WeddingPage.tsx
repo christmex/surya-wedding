@@ -337,15 +337,7 @@ export default function WeddingPage() {
   const [wishError, setWishError] = useState(false);
   const [wishLoading, setWishLoading] = useState(false);
   const [hoveredGallery, setHoveredGallery] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
   const gallerySectionRef = useRef<HTMLElement>(null);
   const countdown = useCountdown();
 
@@ -1042,141 +1034,128 @@ export default function WeddingPage() {
           </div>
         </section>
 
-        {/* ── GALLERY — horizontal scroll timeline (desktop) / swipe (mobile) ── */}
-        {isMobile ? (
-          /* ── MOBILE: snap-scroll horizontal strip ── */
-          <section id="gallery" className="py-20 border-t border-white/[0.04]" style={{ background: "#080808" }}>
-            <div className="px-6 mb-10">
-              <p className="text-[9px] tracking-[0.5em] uppercase text-stone-700 mb-2">A glimpse into our story</p>
-              <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "2rem", fontWeight: 300, color: "#f0ece4" }}>Our Moments</h2>
-            </div>
-            <div
-              className="flex gap-4 overflow-x-auto pb-8 px-6"
-              style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}
+        {/* ── GALLERY ──────────────────────────────────────────── */}
+
+        {/* MOBILE: plain horizontal swipe strip — hidden on md+ */}
+        <section id="gallery" className="md:hidden py-20 border-t border-white/[0.04]" style={{ background: "#080808" }}>
+          <div className="px-6 mb-8">
+            <p className="text-[9px] tracking-[0.5em] uppercase text-stone-700 mb-2">A glimpse into our story</p>
+            <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "2rem", fontWeight: 300, color: "#f0ece4" }}>Our Moments</h2>
+          </div>
+          {/* Swipeable strip — no snap, just smooth touch scroll */}
+          <div
+            className="flex gap-5 pb-8"
+            style={{
+              overflowX: "auto",
+              overflowY: "hidden",
+              WebkitOverflowScrolling: "touch",
+              scrollbarWidth: "none",
+              paddingLeft: "24px",
+              paddingRight: "24px",
+              cursor: "grab",
+            } as React.CSSProperties}
+          >
+            {GALLERY_ITEMS.map((item, i) => (
+              <div key={i} className="flex-shrink-0 flex flex-col" style={{ width: "58vw" }}>
+                <div className="overflow-hidden" style={{ width: "100%", height: "70vw" }}>
+                  <img src={item.src} alt={item.label} className="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div className="mt-3">
+                  <p className="text-[8px] tracking-[0.4em] uppercase text-stone-700 mb-0.5">0{i + 1}</p>
+                  <p style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1rem", fontWeight: 300, color: "#78716c" }}>{item.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-[8px] tracking-[0.3em] uppercase text-stone-800 mt-2">Swipe to explore →</p>
+        </section>
+
+        {/* DESKTOP: sticky scroll-driven horizontal timeline — hidden on mobile */}
+        <section
+          id="gallery-desktop"
+          ref={gallerySectionRef}
+          style={{ height: "280vh", background: "#080808" }}
+          className="hidden md:block border-t border-white/[0.04]"
+        >
+          <div className="sticky top-0 overflow-hidden" style={{ height: "100vh" }}>
+            {/* Top bar */}
+            <motion.div
+              style={{ opacity: galleryLabelOpacity }}
+              className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-8 pt-10"
+            >
+              <div>
+                <p className="text-[9px] tracking-[0.5em] uppercase text-stone-700 mb-2">A glimpse into our story</p>
+                <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)", fontWeight: 300, color: "#f0ece4" }}>
+                  Our Moments
+                </h2>
+              </div>
+              <p className="text-[8px] tracking-[0.35em] uppercase text-stone-700 mb-1.5">Scroll to explore →</p>
+            </motion.div>
+
+            {/* Horizontal track */}
+            <motion.div
+              style={{
+                x: galleryTrackX,
+                position: "absolute",
+                top: 0,
+                paddingLeft: "12vw",
+                paddingRight: "20vw",
+                paddingTop: "120px",
+                paddingBottom: "100px",
+                gap: "48px",
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+              }}
             >
               {GALLERY_ITEMS.map((item, i) => (
                 <motion.div
                   key={i}
-                  className="flex-shrink-0 flex flex-col"
-                  style={{ scrollSnapAlign: "start", width: "62vw" }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
+                  className="flex-shrink-0 flex flex-col cursor-pointer"
+                  initial={{ opacity: 0, y: item.yOffset + 40 }}
+                  animate={{
+                    opacity: hoveredGallery === null ? 1 : hoveredGallery === i ? 1 : 0.35,
+                    y: item.yOffset,
+                    scale: hoveredGallery === null ? 1 : hoveredGallery === i ? 1.06 : 0.93,
+                    filter: hoveredGallery !== null && hoveredGallery !== i ? "blur(1.5px)" : "blur(0px)",
+                  }}
+                  transition={{
+                    opacity: { duration: hoveredGallery !== null ? 0.35 : 1.0, delay: hoveredGallery !== null ? 0 : i * 0.08 },
+                    y: { duration: 1.1, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] },
+                    scale: { duration: 0.4, ease: "easeOut" },
+                    filter: { duration: 0.4, ease: "easeOut" },
+                  }}
+                  onHoverStart={() => setHoveredGallery(i)}
+                  onHoverEnd={() => setHoveredGallery(null)}
                 >
-                  <div className="overflow-hidden" style={{ width: "100%", height: "72vw" }}>
-                    <img src={item.src} alt={item.label} className="w-full h-full object-cover" />
+                  <div className="overflow-hidden" style={{ width: item.w, height: item.h, flexShrink: 0 }}>
+                    <motion.img
+                      src={item.src} alt={item.label}
+                      className="w-full h-full object-cover"
+                      animate={{ scale: hoveredGallery === i ? 1.08 : 1 }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                    />
                   </div>
-                  <div className="mt-3">
-                    <p className="text-[8px] tracking-[0.4em] uppercase text-stone-700 mb-0.5">0{i + 1}</p>
-                    <p style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.1rem", fontWeight: 300, color: "#78716c" }}>{item.label}</p>
+                  <div className="mt-4" style={{ width: item.w }}>
+                    <p className="text-[8px] tracking-[0.4em] uppercase mb-1" style={{ color: hoveredGallery === i ? "#78716c" : "#44403c" }}>
+                      0{i + 1}
+                    </p>
+                    <p className="leading-none whitespace-nowrap transition-colors duration-300"
+                      style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1rem, 1.8vw, 1.4rem)", fontWeight: 300, letterSpacing: "0.02em", color: hoveredGallery === i ? "#a8a29e" : "#44403c" }}>
+                      {item.label}
+                    </p>
                   </div>
                 </motion.div>
               ))}
+            </motion.div>
+
+            {/* Progress bar */}
+            <div className="absolute bottom-5 left-8 right-8 flex items-center gap-4">
+              <motion.div className="h-px bg-stone-800/60 flex-1 origin-left" style={{ scaleX: galleryProgress }} />
+              <span className="text-[8px] tracking-[0.3em] uppercase text-stone-800 shrink-0">{GALLERY_ITEMS.length} moments</span>
             </div>
-          </section>
-        ) : (
-          /* ── DESKTOP: sticky scroll-driven horizontal timeline ── */
-          <section
-            id="gallery"
-            ref={gallerySectionRef}
-            style={{ height: "280vh", background: "#080808" }}
-            className="border-t border-white/[0.04]"
-          >
-            <div className="sticky top-0 overflow-hidden" style={{ height: "100vh" }}>
-
-              {/* Top bar */}
-              <motion.div
-                style={{ opacity: galleryLabelOpacity }}
-                className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-8 pt-10"
-              >
-                <div>
-                  <p className="text-[9px] tracking-[0.5em] uppercase text-stone-700 mb-2">A glimpse into our story</p>
-                  <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)", fontWeight: 300, color: "#f0ece4" }}>
-                    Our Moments
-                  </h2>
-                </div>
-                <p className="text-[8px] tracking-[0.35em] uppercase text-stone-700 mb-1.5">Scroll to explore →</p>
-              </motion.div>
-
-              {/* Horizontal track */}
-              <motion.div
-                style={{
-                  x: galleryTrackX,
-                  position: "absolute",
-                  top: 0,
-                  paddingLeft: "12vw",
-                  paddingRight: "20vw",
-                  paddingTop: "120px",
-                  paddingBottom: "100px",
-                  gap: "48px",
-                  display: "flex",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                {GALLERY_ITEMS.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    className="flex-shrink-0 flex flex-col cursor-pointer"
-                    initial={{ opacity: 0, y: item.yOffset + 40 }}
-                    animate={{
-                      opacity: hoveredGallery === null ? 1 : hoveredGallery === i ? 1 : 0.35,
-                      y: item.yOffset,
-                      scale: hoveredGallery === null ? 1 : hoveredGallery === i ? 1.06 : 0.93,
-                      filter: hoveredGallery !== null && hoveredGallery !== i ? "blur(1.5px)" : "blur(0px)",
-                    }}
-                    transition={{
-                      opacity: { duration: hoveredGallery !== null ? 0.35 : 1.0, delay: hoveredGallery !== null ? 0 : i * 0.08, ease: "easeOut" },
-                      y: { duration: 1.1, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] },
-                      scale: { duration: 0.4, ease: "easeOut" },
-                      filter: { duration: 0.4, ease: "easeOut" },
-                    }}
-                    onHoverStart={() => setHoveredGallery(i)}
-                    onHoverEnd={() => setHoveredGallery(null)}
-                  >
-                    {/* Image */}
-                    <div className="overflow-hidden" style={{ width: item.w, height: item.h, flexShrink: 0 }}>
-                      <motion.img
-                        src={item.src}
-                        alt={item.label}
-                        className="w-full h-full object-cover"
-                        animate={{ scale: hoveredGallery === i ? 1.08 : 1 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                      />
-                    </div>
-
-                    {/* Chapter label — brightens on hover */}
-                    <div className="mt-4" style={{ width: item.w }}>
-                      <p className="text-[8px] tracking-[0.4em] uppercase mb-1"
-                        style={{ color: hoveredGallery === i ? "#78716c" : "#44403c" }}>
-                        0{i + 1}
-                      </p>
-                      <p
-                        className="leading-none whitespace-nowrap transition-colors duration-300"
-                        style={{
-                          fontFamily: "var(--font-cormorant), serif",
-                          fontSize: "clamp(1rem, 1.8vw, 1.4rem)",
-                          fontWeight: 300,
-                          letterSpacing: "0.02em",
-                          color: hoveredGallery === i ? "#a8a29e" : "#44403c",
-                        }}
-                      >
-                        {item.label}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* Progress bar */}
-              <div className="absolute bottom-5 left-8 right-8 flex items-center gap-4">
-                <motion.div className="h-px bg-stone-800/60 flex-1 origin-left" style={{ scaleX: galleryProgress }} />
-                <span className="text-[8px] tracking-[0.3em] uppercase text-stone-800 shrink-0">{GALLERY_ITEMS.length} moments</span>
-              </div>
-            </div>
-          </section>
-        )}
+          </div>
+        </section>
 
         {/* ── GIFT ─────────────────────────────────────────── */}
         <section id="gift" className="py-32 px-6 border-t border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #080808, #0c0c0c)" }}>
