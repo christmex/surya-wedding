@@ -527,15 +527,44 @@ export default function WeddingPage() {
               ))}
             </svg>
 
-            {/* ── Corner ornaments ── */}
-            {(["top-5 left-5", "top-5 right-5 rotate-90", "bottom-5 left-5 -rotate-90", "bottom-5 right-5 rotate-180"] as const).map((cls) => (
-              <motion.div key={cls} className={`absolute ${cls} opacity-25`}
-                initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 0.25, scale: 1 }}
-                transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}>
-                <svg width="32" height="32" viewBox="0 0 32 32" className="text-amber-400" fill="none">
-                  <line x1="0" y1="0" x2="16" y2="0" stroke="currentColor" strokeWidth="0.7" />
-                  <line x1="0" y1="0" x2="0" y2="16" stroke="currentColor" strokeWidth="0.7" />
-                  <circle cx="0" cy="0" r="1.5" fill="currentColor" opacity="0.6" />
+            {/* ── Floral corner ornaments ── */}
+            {([
+              { pos: "top-0 left-0", rot: "rotate-0" },
+              { pos: "top-0 right-0", rot: "rotate-90" },
+              { pos: "bottom-0 left-0", rot: "-rotate-90" },
+              { pos: "bottom-0 right-0", rot: "rotate-180" },
+            ] as const).map(({ pos, rot }, idx) => (
+              <motion.div
+                key={pos}
+                className={`absolute ${pos} ${rot} pointer-events-none`}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.6, delay: 0.3 + idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Stem */}
+                  <path d="M10 170 Q30 140 55 110 Q75 85 95 60" stroke="#c9a96e" strokeWidth="0.6" opacity="0.35" fill="none"/>
+                  {/* Branch 1 */}
+                  <path d="M55 110 Q45 90 35 75" stroke="#c9a96e" strokeWidth="0.5" opacity="0.28" fill="none"/>
+                  {/* Branch 2 */}
+                  <path d="M75 85 Q90 72 85 55" stroke="#c9a96e" strokeWidth="0.5" opacity="0.28" fill="none"/>
+                  {/* Leaf 1 */}
+                  <path d="M35 75 Q20 65 15 50 Q30 55 35 75Z" stroke="#c9a96e" strokeWidth="0.5" fill="rgba(201,169,110,0.06)" opacity="0.5"/>
+                  {/* Leaf 2 */}
+                  <path d="M55 110 Q70 100 80 85 Q65 92 55 110Z" stroke="#c9a96e" strokeWidth="0.5" fill="rgba(201,169,110,0.06)" opacity="0.5"/>
+                  {/* Leaf 3 */}
+                  <path d="M85 55 Q75 38 60 32 Q68 48 85 55Z" stroke="#c9a96e" strokeWidth="0.5" fill="rgba(201,169,110,0.06)" opacity="0.5"/>
+                  {/* Rose bud – petals */}
+                  <path d="M95 60 Q88 48 92 38 Q100 44 95 60Z" stroke="#c9a96e" strokeWidth="0.6" fill="rgba(201,169,110,0.08)" opacity="0.55"/>
+                  <path d="M95 60 Q107 52 112 42 Q103 48 95 60Z" stroke="#c9a96e" strokeWidth="0.6" fill="rgba(201,169,110,0.08)" opacity="0.55"/>
+                  <path d="M95 60 Q95 46 100 36 Q104 46 95 60Z" stroke="#c9a96e" strokeWidth="0.55" fill="rgba(201,169,110,0.07)" opacity="0.5"/>
+                  {/* Rose centre */}
+                  <circle cx="96" cy="50" r="2.5" stroke="#c9a96e" strokeWidth="0.5" fill="rgba(201,169,110,0.15)" opacity="0.5"/>
+                  {/* Small bud on branch */}
+                  <path d="M35 75 Q30 67 33 60 Q38 65 35 75Z" stroke="#c9a96e" strokeWidth="0.5" fill="rgba(201,169,110,0.07)" opacity="0.4"/>
+                  {/* Tiny dots */}
+                  <circle cx="20" cy="170" r="1" fill="#c9a96e" opacity="0.2"/>
+                  <circle cx="8" cy="155" r="0.8" fill="#c9a96e" opacity="0.15"/>
                 </svg>
               </motion.div>
             ))}
@@ -595,6 +624,19 @@ export default function WeddingPage() {
                 <div className="w-10 h-px bg-stone-600" />
                 <p className="text-[9px] tracking-[0.45em] uppercase text-stone-400">14 · 06 · 2026</p>
                 <div className="w-10 h-px bg-stone-600" />
+              </motion.div>
+
+              {/* ── Floral divider ── */}
+              <motion.div variants={fadeUp} className="flex items-center gap-3 w-full justify-center opacity-30">
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent to-amber-400/50 max-w-[60px]" />
+                <svg width="28" height="14" viewBox="0 0 28 14" fill="none">
+                  <path d="M14 7 Q11 3 7 2 Q10 6 14 7Z" stroke="#c9a96e" strokeWidth="0.6" fill="rgba(201,169,110,0.2)"/>
+                  <path d="M14 7 Q17 3 21 2 Q18 6 14 7Z" stroke="#c9a96e" strokeWidth="0.6" fill="rgba(201,169,110,0.2)"/>
+                  <path d="M14 7 Q10 10 7 12 Q11 9 14 7Z" stroke="#c9a96e" strokeWidth="0.6" fill="rgba(201,169,110,0.2)"/>
+                  <path d="M14 7 Q18 10 21 12 Q17 9 14 7Z" stroke="#c9a96e" strokeWidth="0.6" fill="rgba(201,169,110,0.2)"/>
+                  <circle cx="14" cy="7" r="1.5" fill="#c9a96e" opacity="0.5"/>
+                </svg>
+                <div className="flex-1 h-px bg-gradient-to-l from-transparent to-amber-400/50 max-w-[60px]" />
               </motion.div>
 
               {/* ── Guest greeting ── */}
