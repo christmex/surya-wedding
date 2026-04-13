@@ -5,6 +5,7 @@ import {
   useRef,
   useEffect,
 } from "react";
+import { useSearchParams } from "next/navigation";
 import { supabase, type Wish } from "@/app/lib/supabase";
 import {
   motion,
@@ -313,7 +314,8 @@ const OVERLAY_PARTICLES = Array.from({ length: 22 }, (_, i) => {
 export default function WeddingPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [guestName, setGuestName] = useState("");
+  const params = useSearchParams();
+  const guestName = params.get("to") ?? params.get("name") ?? "";
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [wishName, setWishName] = useState("");
   const [wishMessage, setWishMessage] = useState("");
@@ -564,39 +566,25 @@ export default function WeddingPage() {
                 <div className="w-10 h-px bg-stone-800" />
               </motion.div>
 
-              {/* ── Guest name input ── */}
-              <motion.div variants={fadeUp} className="w-full pt-2">
-                <p className="text-[8px] tracking-[0.45em] uppercase text-stone-700 mb-3">
-                  Kepada Yth.
-                </p>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === "Enter" && guestName.trim()) handleOpen(); }}
-                    placeholder="Your name"
-                    className="w-full bg-transparent border-b border-stone-800/70 pb-2.5 text-sm text-center text-stone-300 placeholder-stone-800 outline-none focus:border-amber-400/30 transition-colors duration-400"
-                    style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.1rem", letterSpacing: "0.05em" }}
-                  />
-                  <motion.div
-                    className="absolute bottom-0 left-0 h-px bg-amber-400/30"
-                    initial={{ scaleX: 0 }}
-                    whileFocus={{ scaleX: 1 }}
-                    style={{ transformOrigin: "left" }}
-                    transition={{ duration: 0.4 }}
-                  />
-                </div>
-                {guestName.trim() && (
-                  <motion.p
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-2 text-[9px] tracking-[0.25em] uppercase text-amber-400/50"
+              {/* ── Guest greeting ── */}
+              {guestName.trim() && (
+                <motion.div variants={fadeUp} className="w-full pt-1 text-center space-y-1">
+                  <p className="text-[8px] tracking-[0.5em] uppercase text-stone-700">Kepada Yth.</p>
+                  <p
+                    className="text-stone-300"
+                    style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.1rem, 4vw, 1.4rem)", fontWeight: 300, letterSpacing: "0.04em" }}
                   >
-                    Welcome, {guestName.trim()}
-                  </motion.p>
-                )}
-              </motion.div>
+                    {guestName.trim()}
+                  </p>
+                  <motion.div
+                    className="mx-auto h-px bg-amber-400/25"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ width: "60%", transformOrigin: "center" }}
+                  />
+                </motion.div>
+              )}
 
               {/* Open button */}
               <motion.button
