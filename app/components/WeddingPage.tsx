@@ -610,7 +610,7 @@ export default function WeddingPage() {
                   >
                     <p className="text-[8px] tracking-[0.5em] uppercase text-stone-400">Kepada Yth.</p>
                     <p
-                      className="text-stone-300"
+                      className="text-stone-300 uppercase"
                       style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.1rem, 4vw, 1.4rem)", fontWeight: 300, letterSpacing: "0.04em" }}
                     >
                       {guestName.trim()}
