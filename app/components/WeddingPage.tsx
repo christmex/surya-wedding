@@ -5,7 +5,6 @@ import {
   useRef,
   useEffect,
 } from "react";
-import { useSearchParams } from "next/navigation";
 import { supabase, type Wish } from "@/app/lib/supabase";
 import {
   motion,
@@ -314,8 +313,12 @@ const OVERLAY_PARTICLES = Array.from({ length: 22 }, (_, i) => {
 export default function WeddingPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const params = useSearchParams();
-  const guestName = params.get("to") ?? params.get("name") ?? "";
+  const [guestName, setGuestName] = useState("");
+
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    setGuestName(p.get("to") ?? p.get("name") ?? "");
+  }, []);
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [wishName, setWishName] = useState("");
   const [wishMessage, setWishMessage] = useState("");
@@ -567,24 +570,33 @@ export default function WeddingPage() {
               </motion.div>
 
               {/* ── Guest greeting ── */}
-              {guestName.trim() && (
-                <motion.div variants={fadeUp} className="w-full pt-1 text-center space-y-1">
-                  <p className="text-[8px] tracking-[0.5em] uppercase text-stone-700">Kepada Yth.</p>
-                  <p
-                    className="text-stone-300"
-                    style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.1rem, 4vw, 1.4rem)", fontWeight: 300, letterSpacing: "0.04em" }}
-                  >
-                    {guestName.trim()}
-                  </p>
+              <AnimatePresence>
+                {guestName.trim() && (
                   <motion.div
-                    className="mx-auto h-px bg-amber-400/25"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ width: "60%", transformOrigin: "center" }}
-                  />
-                </motion.div>
-              )}
+                    key="greeting"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full pt-1 text-center space-y-1"
+                  >
+                    <p className="text-[8px] tracking-[0.5em] uppercase text-stone-700">Kepada Yth.</p>
+                    <p
+                      className="text-stone-300"
+                      style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.1rem, 4vw, 1.4rem)", fontWeight: 300, letterSpacing: "0.04em" }}
+                    >
+                      {guestName.trim()}
+                    </p>
+                    <motion.div
+                      className="mx-auto h-px bg-amber-400/25"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ width: "60%", transformOrigin: "center" }}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Open button */}
               <motion.button
@@ -598,7 +610,7 @@ export default function WeddingPage() {
               </motion.button>
 
               <motion.p variants={fadeUp} className="text-[9px] tracking-[0.2em] uppercase text-stone-800">
-                ♪ With music
+                ♪ With Love
               </motion.p>
             </motion.div>
           </motion.div>
