@@ -261,7 +261,7 @@ function CopyButton({ value }: { value: string }) {
       onClick={copy}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.97 }}
-      className="mt-6 w-full py-3 text-[9px] tracking-[0.3em] uppercase border border-stone-800/60 text-stone-600 hover:border-amber-400/25 hover:text-amber-400/60 transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2"
+      className="mt-6 w-full py-3 text-[9px] tracking-[0.3em] uppercase border border-stone-600/60 text-stone-400 hover:border-amber-400/25 hover:text-amber-400/60 transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2"
     >
       <AnimatePresence mode="wait">
         {copied ? (
@@ -571,7 +571,7 @@ export default function WeddingPage() {
                 </motion.svg>
               </motion.div>
 
-              <motion.p variants={fadeUp} className="text-[9px] tracking-[0.55em] uppercase text-stone-600 font-medium">
+              <motion.p variants={fadeUp} className="text-[9px] tracking-[0.55em] uppercase text-stone-400 font-medium">
                 The Wedding of
               </motion.p>
 
@@ -592,9 +592,9 @@ export default function WeddingPage() {
               </motion.h1>
 
               <motion.div variants={fadeUp} className="flex items-center gap-4">
-                <div className="w-10 h-px bg-stone-800" />
-                <p className="text-[9px] tracking-[0.45em] uppercase text-stone-600">14 · 06 · 2026</p>
-                <div className="w-10 h-px bg-stone-800" />
+                <div className="w-10 h-px bg-stone-600" />
+                <p className="text-[9px] tracking-[0.45em] uppercase text-stone-400">14 · 06 · 2026</p>
+                <div className="w-10 h-px bg-stone-600" />
               </motion.div>
 
               {/* ── Guest greeting ── */}
@@ -608,7 +608,7 @@ export default function WeddingPage() {
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="w-full pt-1 text-center space-y-1"
                   >
-                    <p className="text-[8px] tracking-[0.5em] uppercase text-stone-700">Kepada Yth.</p>
+                    <p className="text-[8px] tracking-[0.5em] uppercase text-stone-400">Kepada Yth.</p>
                     <p
                       className="text-stone-300"
                       style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.1rem, 4vw, 1.4rem)", fontWeight: 300, letterSpacing: "0.04em" }}
@@ -637,7 +637,7 @@ export default function WeddingPage() {
                 Open Invitation
               </motion.button>
 
-              <motion.p variants={fadeUp} className="text-[9px] tracking-[0.2em] uppercase text-stone-800">
+              <motion.p variants={fadeUp} className="text-[9px] tracking-[0.2em] uppercase text-stone-400">
                 ♪ With Love
               </motion.p>
             </motion.div>
@@ -661,7 +661,7 @@ export default function WeddingPage() {
             className={`fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full border flex items-center justify-center backdrop-blur-md transition-colors duration-300 ${
               isPlaying
                 ? "bg-amber-500/10 border-amber-400/30 text-amber-400 music-playing"
-                : "bg-[#111]/80 border-stone-700/50 text-stone-500 hover:text-stone-200 hover:border-stone-600"
+                : "bg-[#111]/80 border-stone-700/50 text-stone-400 hover:text-stone-200 hover:border-stone-600"
             }`}
             aria-label={isPlaying ? "Pause music" : "Play music"}
           >
@@ -706,12 +706,12 @@ export default function WeddingPage() {
               </span>
               MA
             </a>
-            <div className="hidden md:flex gap-8 text-[10px] tracking-[0.25em] uppercase text-stone-600 font-medium">
+            <div className="hidden md:flex gap-8 text-[10px] tracking-[0.25em] uppercase text-stone-400 font-medium">
               {([["#couple","Couple"],["#schedule","Schedule"],["#gallery","Gallery"],["#gift","Gift"],["#wishes","Wishes"]] as const).map(([href, label]) => (
                 <a key={href} href={href} className="hover:text-stone-300 transition-colors duration-300">{label}</a>
               ))}
             </div>
-            <a href="#wishes" className="text-[9px] tracking-[0.25em] uppercase border border-stone-800/70 px-4 py-2 text-stone-500 hover:bg-stone-100 hover:text-stone-900 hover:border-stone-100 transition-all duration-400">
+            <a href="#wishes" className="text-[9px] tracking-[0.25em] uppercase border border-stone-600/70 px-4 py-2 text-stone-400 hover:bg-stone-100 hover:text-stone-900 hover:border-stone-100 transition-all duration-400">
               Wishes
             </a>
           </div>
@@ -758,7 +758,7 @@ export default function WeddingPage() {
             animate={isOpen ? "visible" : "hidden"}
             variants={stagger(0.2, 0.3)}
           >
-            <motion.p variants={fadeUp} className="text-[10px] tracking-[0.5em] uppercase text-stone-500 font-medium">
+            <motion.p variants={fadeUp} className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium">
               Joyfully inviting you to the wedding of
             </motion.p>
 
@@ -789,7 +789,7 @@ export default function WeddingPage() {
               <div className="w-12 h-px bg-stone-700" />
             </motion.div>
 
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-stone-500">
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-stone-400">
               <span className="flex items-center gap-2">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 Sunday, June 14, 2026
@@ -814,7 +814,7 @@ export default function WeddingPage() {
               animate={{ scaleY: [1, 0.4, 1], opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
-            <p className="text-[8px] tracking-[0.3em] uppercase text-stone-600">Scroll</p>
+            <p className="text-[8px] tracking-[0.3em] uppercase text-stone-400">Scroll</p>
           </motion.div>
         </section>
 
@@ -823,7 +823,7 @@ export default function WeddingPage() {
           <Reveal className="max-w-2xl mx-auto text-center">
             <FloatingDiamond size={16} className="text-amber-400/20 mx-auto mb-8" />
             <p
-              className="text-stone-500 font-light leading-relaxed italic"
+              className="text-stone-400 font-light leading-relaxed italic"
               style={{
                 fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
                 fontSize: "clamp(1.1rem, 3vw, 1.4rem)",
@@ -832,7 +832,7 @@ export default function WeddingPage() {
             >
               "And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts."
             </p>
-            <p className="mt-5 text-[9px] tracking-[0.35em] uppercase text-stone-700">Ar-Rum : 21</p>
+            <p className="mt-5 text-[9px] tracking-[0.35em] uppercase text-stone-400">Ar-Rum : 21</p>
           </Reveal>
         </section>
 
@@ -842,7 +842,7 @@ export default function WeddingPage() {
           style={{ background: "linear-gradient(to bottom, #0c0c0c, #080808)" }}
         >
           <Reveal className="max-w-xl mx-auto text-center">
-            <p className="text-[10px] tracking-[0.4em] uppercase text-stone-600 font-medium mb-12">
+            <p className="text-[10px] tracking-[0.4em] uppercase text-stone-400 font-medium mb-12">
               Counting down to the big day
             </p>
             <motion.div
@@ -861,7 +861,7 @@ export default function WeddingPage() {
                 ] as const
               ).map(({ value, label }) => (
                 <motion.div key={label} variants={fadeUp} className="flex flex-col items-center gap-3">
-                  <div className="relative w-full aspect-square max-w-[76px] flex items-center justify-center border border-stone-800/60 bg-stone-900/20">
+                  <div className="relative w-full aspect-square max-w-[76px] flex items-center justify-center border border-stone-600/60 bg-stone-900/20">
                     <span className="absolute top-0 left-0 w-2.5 h-px bg-amber-400/30" />
                     <span className="absolute top-0 left-0 w-px h-2.5 bg-amber-400/30" />
                     <span className="absolute top-0 right-0 w-2.5 h-px bg-amber-400/30" />
@@ -874,7 +874,7 @@ export default function WeddingPage() {
                       {pad(value)}
                     </span>
                   </div>
-                  <span className="text-[8px] tracking-[0.25em] uppercase text-stone-700 font-medium">{label}</span>
+                  <span className="text-[8px] tracking-[0.25em] uppercase text-stone-400 font-medium">{label}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -885,7 +885,7 @@ export default function WeddingPage() {
         <section id="couple" className="py-32 px-6 bg-[#080808]">
           <div className="max-w-5xl mx-auto">
             <Reveal className="text-center mb-24">
-              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-600 font-medium mb-4">Two hearts, one destiny</p>
+              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">Two hearts, one destiny</p>
               <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2.5rem, 5vw, 3.75rem)", fontWeight: 300, color: "#f0ece4" }}>
                 The Couple
               </h2>
@@ -900,7 +900,7 @@ export default function WeddingPage() {
               variants={stagger(0.2)}
             >
               <motion.div variants={slideLeft} className="w-60 md:w-72 shrink-0">
-                <div className="aspect-[3/4] overflow-hidden border border-stone-800/40" style={{ borderRadius: "50% 50% 50% 50% / 55% 55% 45% 45%" }}>
+                <div className="aspect-[3/4] overflow-hidden border border-stone-600/40" style={{ borderRadius: "50% 50% 50% 50% / 55% 55% 45% 45%" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <motion.img
                     src="https://images.unsplash.com/photo-1594938298603-c8148c4b4e10?q=80&w=800&auto=format&fit=crop"
@@ -917,20 +917,20 @@ export default function WeddingPage() {
                 <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300, color: "#f0ece4", lineHeight: 1.1 }}>
                   Mila Arinda
                 </h2>
-                <div className="space-y-1 text-sm text-stone-500 font-light">
-                  <p className="italic text-stone-700 text-xs">Daughter of:</p>
+                <div className="space-y-1 text-sm text-stone-400 font-light">
+                  <p className="italic text-stone-400 text-xs">Daughter of:</p>
                   <p>Bapak Ahmad Rahmad &amp; Ibu Siti Nurhasanah</p>
                 </div>
                 <div className="flex items-center gap-3 pt-2 justify-center md:justify-start">
-                  <div className="w-8 h-px bg-stone-800" />
-                  <span className="text-[9px] tracking-[0.2em] uppercase text-stone-700">@milaarinda</span>
+                  <div className="w-8 h-px bg-stone-600" />
+                  <span className="text-[9px] tracking-[0.2em] uppercase text-stone-400">@milaarinda</span>
                 </div>
               </motion.div>
             </motion.div>
 
             {/* Divider */}
             <Reveal className="flex items-center justify-center gap-6 mb-28">
-              <div className="flex-1 max-w-[120px] h-px bg-stone-800/60" />
+              <div className="flex-1 max-w-[120px] h-px bg-stone-600/60" />
               <div className="relative w-14 h-14 flex items-center justify-center">
                 <motion.svg width="56" height="56" viewBox="0 0 56 56" className="text-amber-400/15"
                   animate={{ rotate: [0, 10, -10, 0] }}
@@ -941,7 +941,7 @@ export default function WeddingPage() {
                 </motion.svg>
                 <span className="absolute italic" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.5rem", fontWeight: 300, color: "rgba(201, 169, 110, 0.35)" }}>&amp;</span>
               </div>
-              <div className="flex-1 max-w-[120px] h-px bg-stone-800/60" />
+              <div className="flex-1 max-w-[120px] h-px bg-stone-600/60" />
             </Reveal>
 
             {/* Groom */}
@@ -953,7 +953,7 @@ export default function WeddingPage() {
               variants={stagger(0.2)}
             >
               <motion.div variants={slideRight} className="w-60 md:w-72 shrink-0">
-                <div className="aspect-[3/4] overflow-hidden border border-stone-800/40" style={{ borderRadius: "50% 50% 50% 50% / 55% 55% 45% 45%" }}>
+                <div className="aspect-[3/4] overflow-hidden border border-stone-600/40" style={{ borderRadius: "50% 50% 50% 50% / 55% 55% 45% 45%" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <motion.img
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
@@ -970,13 +970,13 @@ export default function WeddingPage() {
                 <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300, color: "#f0ece4", lineHeight: 1.1 }}>
                   Ardy Surya
                 </h2>
-                <div className="space-y-1 text-sm text-stone-500 font-light">
-                  <p className="italic text-stone-700 text-xs">Son of:</p>
+                <div className="space-y-1 text-sm text-stone-400 font-light">
+                  <p className="italic text-stone-400 text-xs">Son of:</p>
                   <p>Bapak Hendra Pratama &amp; Ibu Dewi Lestari</p>
                 </div>
                 <div className="flex items-center gap-3 pt-2 justify-center md:justify-end">
-                  <span className="text-[9px] tracking-[0.2em] uppercase text-stone-700">@ardysurya</span>
-                  <div className="w-8 h-px bg-stone-800" />
+                  <span className="text-[9px] tracking-[0.2em] uppercase text-stone-400">@ardysurya</span>
+                  <div className="w-8 h-px bg-stone-600" />
                 </div>
               </motion.div>
             </motion.div>
@@ -987,7 +987,7 @@ export default function WeddingPage() {
         <section id="schedule" className="py-32 px-6 border-y border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #0c0c0c, #080808)" }}>
           <div className="max-w-4xl mx-auto">
             <Reveal className="text-center mb-20">
-              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-600 font-medium mb-4">We await your presence</p>
+              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">We await your presence</p>
               <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2.5rem, 5vw, 3.75rem)", fontWeight: 300, color: "#f0ece4" }}>
                 Event Schedule
               </h2>
@@ -1020,20 +1020,20 @@ export default function WeddingPage() {
                   key={ev.label}
                   variants={fadeUp}
                   whileHover={{ borderColor: "rgba(180, 140, 55, 0.15)", backgroundColor: "rgba(255,255,255,0.02)" }}
-                  className="relative p-10 border border-stone-800/40 bg-stone-900/10 flex flex-col items-center text-center group transition-colors duration-500"
+                  className="relative p-10 border border-stone-600/40 bg-stone-900/10 flex flex-col items-center text-center group transition-colors duration-500"
                 >
                   <span className="absolute top-0 left-0 w-5 h-px bg-amber-400/20 group-hover:w-10 transition-all duration-500" />
                   <span className="absolute top-0 left-0 h-5 w-px bg-amber-400/20 group-hover:h-10 transition-all duration-500" />
                   <span className="absolute bottom-0 right-0 w-5 h-px bg-amber-400/20 group-hover:w-10 transition-all duration-500" />
                   <span className="absolute bottom-0 right-0 h-5 w-px bg-amber-400/20 group-hover:h-10 transition-all duration-500" />
-                  <div className="w-14 h-14 border border-stone-800/60 flex items-center justify-center mb-7 text-amber-400/40 group-hover:border-amber-400/25 group-hover:text-amber-400/60 transition-all duration-500">
+                  <div className="w-14 h-14 border border-stone-600/60 flex items-center justify-center mb-7 text-amber-400/40 group-hover:border-amber-400/25 group-hover:text-amber-400/60 transition-all duration-500">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">{ev.icon}</svg>
                   </div>
                   <h3 className="mb-3" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.5rem", fontWeight: 400, color: "#f0ece4" }}>{ev.label}</h3>
-                  <p className="text-[10px] tracking-[0.2em] uppercase text-stone-500 font-medium mb-1">{ev.day}</p>
-                  <p className="text-sm text-stone-600 font-light mb-5">{ev.time}</p>
-                  <p className="text-sm text-stone-500 font-light leading-relaxed mb-6 max-w-[260px]">{ev.venue}</p>
-                  <a href="#" className="text-[9px] tracking-[0.3em] uppercase text-stone-600 border-b border-stone-800/60 pb-0.5 hover:text-amber-400/60 hover:border-amber-400/30 transition-colors">View on Map</a>
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-stone-400 font-medium mb-1">{ev.day}</p>
+                  <p className="text-sm text-stone-400 font-light mb-5">{ev.time}</p>
+                  <p className="text-sm text-stone-400 font-light leading-relaxed mb-6 max-w-[260px]">{ev.venue}</p>
+                  <a href="#" className="text-[9px] tracking-[0.3em] uppercase text-stone-400 border-b border-stone-600/60 pb-0.5 hover:text-amber-400/60 hover:border-amber-400/30 transition-colors">View on Map</a>
                 </motion.div>
               ))}
             </motion.div>
@@ -1055,12 +1055,12 @@ export default function WeddingPage() {
               className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-6 md:px-8 pt-8 md:pt-10"
             >
               <div>
-                <p className="text-[9px] tracking-[0.5em] uppercase text-stone-700 mb-1.5">A glimpse into our story</p>
+                <p className="text-[9px] tracking-[0.5em] uppercase text-stone-400 mb-1.5 mt-4">A glimpse into our story</p>
                 <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.4rem, 2.5vw, 2.4rem)", fontWeight: 300, color: "#f0ece4" }}>
                   Our Moments
                 </h2>
               </div>
-              <p className="text-[8px] tracking-[0.3em] uppercase text-stone-700 mb-1">Scroll →</p>
+              <p className="text-[8px] tracking-[0.3em] uppercase text-stone-200 mb-1">Scroll →</p>
             </motion.div>
 
             {/* Horizontal track — width computed at runtime so it works on any screen */}
@@ -1125,7 +1125,7 @@ export default function WeddingPage() {
                     {/* Label */}
                     <div className="mt-3 md:mt-4">
                       <p className="text-[7px] md:text-[8px] tracking-[0.4em] uppercase mb-0.5"
-                        style={{ color: hoveredGallery === i ? "#78716c" : "#44403c" }}>
+                        style={{ color: hoveredGallery === i ? "#a8a29e" : "#a8a29e" }}>
                         0{i + 1}
                       </p>
                       <p className="leading-none whitespace-nowrap transition-colors duration-300"
@@ -1134,7 +1134,7 @@ export default function WeddingPage() {
                           fontSize: "clamp(0.85rem, 1.5vw, 1.4rem)",
                           fontWeight: 300,
                           letterSpacing: "0.02em",
-                          color: hoveredGallery === i ? "#a8a29e" : "#44403c",
+                          color: hoveredGallery === i ? "#a8a29e" : "#a8a29e",
                         }}>
                         {item.label}
                       </p>
@@ -1146,8 +1146,8 @@ export default function WeddingPage() {
 
             {/* Progress bar */}
             <div className="absolute bottom-4 left-6 right-6 flex items-center gap-4">
-              <motion.div className="h-px bg-stone-800/60 flex-1 origin-left" style={{ scaleX: galleryProgress }} />
-              <span className="text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-stone-800 shrink-0">{GALLERY_ITEMS.length} moments</span>
+              <motion.div className="h-px bg-stone-600/60 flex-1 origin-left" style={{ scaleX: galleryProgress }} />
+              <span className="text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-stone-400 shrink-0">{GALLERY_ITEMS.length} moments</span>
             </div>
           </div>
         </section>
@@ -1156,11 +1156,11 @@ export default function WeddingPage() {
         <section id="gift" className="py-32 px-6 border-t border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #080808, #0c0c0c)" }}>
           <div className="max-w-3xl mx-auto">
             <Reveal className="text-center mb-16">
-              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-600 font-medium mb-4">Your generosity means the world</p>
+              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">Your generosity means the world</p>
               <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2.5rem, 5vw, 3.75rem)", fontWeight: 300, color: "#f0ece4" }}>
                 Wedding Gift
               </h2>
-              <p className="mt-4 text-sm text-stone-600 font-light max-w-md mx-auto leading-relaxed">
+              <p className="mt-4 text-sm text-stone-400 font-light max-w-md mx-auto leading-relaxed">
                 Your presence is the greatest gift of all. If you wish to bless us with a gift, a contribution to our account would be warmly appreciated.
               </p>
             </Reveal>
@@ -1180,7 +1180,7 @@ export default function WeddingPage() {
                   key={acc.name}
                   variants={fadeUp}
                   whileHover={{ borderColor: "rgba(180, 140, 55, 0.15)" }}
-                  className="relative p-8 border border-stone-800/40 bg-stone-900/15 group transition-colors duration-500"
+                  className="relative p-8 border border-stone-600/40 bg-stone-900/15 group transition-colors duration-500"
                 >
                   <span className="absolute top-0 left-0 w-5 h-px bg-amber-400/20 group-hover:w-10 transition-all duration-500" />
                   <span className="absolute top-0 left-0 h-5 w-px bg-amber-400/20 group-hover:h-10 transition-all duration-500" />
@@ -1188,23 +1188,23 @@ export default function WeddingPage() {
                   <span className="absolute bottom-0 right-0 h-5 w-px bg-amber-400/20 group-hover:h-10 transition-all duration-500" />
 
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-9 h-9 border border-stone-800/60 flex items-center justify-center text-amber-400/40 shrink-0">
+                    <div className="w-9 h-9 border border-stone-600/60 flex items-center justify-center text-amber-400/40 shrink-0">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
                     </div>
-                    <span className="text-[9px] tracking-[0.35em] uppercase text-stone-600 font-medium">Bank Transfer</span>
+                    <span className="text-[9px] tracking-[0.35em] uppercase text-stone-400 font-medium">Bank Transfer</span>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <p className="text-[9px] tracking-[0.25em] uppercase text-stone-700 mb-1">Bank</p>
+                      <p className="text-[9px] tracking-[0.25em] uppercase text-stone-400 mb-1">Bank</p>
                       <p className="text-sm text-stone-300 font-light">{acc.bank}</p>
                     </div>
                     <div>
-                      <p className="text-[9px] tracking-[0.25em] uppercase text-stone-700 mb-1">Account Name</p>
+                      <p className="text-[9px] tracking-[0.25em] uppercase text-stone-400 mb-1">Account Name</p>
                       <p className="text-sm text-stone-300 font-light">{acc.name}</p>
                     </div>
                     <div>
-                      <p className="text-[9px] tracking-[0.25em] uppercase text-stone-700 mb-1">Account Number</p>
+                      <p className="text-[9px] tracking-[0.25em] uppercase text-stone-400 mb-1">Account Number</p>
                       <p className="text-stone-100 tracking-widest" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.4rem", fontWeight: 400, letterSpacing: "0.12em" }}>
                         {acc.number}
                       </p>
@@ -1221,11 +1221,11 @@ export default function WeddingPage() {
         <section id="wishes" className="py-32 px-6 border-t border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #0c0c0c, #080808)" }}>
           <div className="max-w-5xl mx-auto">
             <Reveal className="text-center mb-20">
-              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-600 font-medium mb-4">Share your love</p>
+              <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">Share your love</p>
               <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2.5rem, 5vw, 3.75rem)", fontWeight: 300, color: "#f0ece4" }}>
                 Wishes &amp; Blessings
               </h2>
-              <p className="mt-4 text-sm text-stone-600 font-light">Leave a note or well wish for the couple</p>
+              <p className="mt-4 text-sm text-stone-400 font-light">Leave a note or well wish for the couple</p>
             </Reveal>
 
             <motion.div
@@ -1237,7 +1237,7 @@ export default function WeddingPage() {
             >
               {/* Form */}
               <motion.div variants={fadeUp}>
-                <h3 className="text-[10px] tracking-[0.35em] uppercase text-stone-600 font-medium mb-8">Leave a Message</h3>
+                <h3 className="text-[10px] tracking-[0.35em] uppercase text-stone-400 font-medium mb-8">Leave a Message</h3>
                 <AnimatePresence mode="wait">
                   {wishSuccess ? (
                     <motion.div
@@ -1257,19 +1257,19 @@ export default function WeddingPage() {
                         </svg>
                       </div>
                       <p style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.75rem", color: "#f0ece4", fontWeight: 300 }}>Thank You</p>
-                      <p className="text-sm text-stone-500 font-light max-w-xs">Your beautiful message has been received with love.</p>
+                      <p className="text-sm text-stone-400 font-light max-w-xs">Your beautiful message has been received with love.</p>
                     </motion.div>
                   ) : (
                     <motion.form key="form" onSubmit={handleWishSubmit} className="space-y-8" initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
                       <div>
-                        <label className="block text-[9px] tracking-[0.3em] uppercase text-stone-700 mb-3">Your Name</label>
+                        <label className="block text-[9px] tracking-[0.3em] uppercase text-stone-400 mb-3">Your Name</label>
                         <input type="text" required value={wishName} onChange={(e) => setWishName(e.target.value)} placeholder="Enter your name"
-                          className="w-full bg-transparent border-b border-stone-800/80 pb-3 text-sm text-stone-300 placeholder-stone-800 outline-none focus:border-amber-400/30 transition-colors duration-300" />
+                          className="w-full bg-transparent border-b border-stone-600/80 pb-3 text-sm text-stone-300 placeholder-stone-800 outline-none focus:border-amber-400/30 transition-colors duration-300" />
                       </div>
                       <div>
-                        <label className="block text-[9px] tracking-[0.3em] uppercase text-stone-700 mb-3">Your Wishes</label>
+                        <label className="block text-[9px] tracking-[0.3em] uppercase text-stone-400 mb-3">Your Wishes</label>
                         <textarea required rows={4} value={wishMessage} onChange={(e) => setWishMessage(e.target.value)} placeholder="Write your well wishes here..."
-                          className="w-full bg-transparent border-b border-stone-800/80 pb-3 text-sm text-stone-300 placeholder-stone-800 outline-none resize-none focus:border-amber-400/30 transition-colors duration-300" />
+                          className="w-full bg-transparent border-b border-stone-600/80 pb-3 text-sm text-stone-300 placeholder-stone-800 outline-none resize-none focus:border-amber-400/30 transition-colors duration-300" />
                       </div>
                       <AnimatePresence>
                         {wishError && (
@@ -1289,7 +1289,7 @@ export default function WeddingPage() {
                         disabled={wishLoading}
                         whileHover={wishLoading ? {} : { scale: 1.02 }}
                         whileTap={wishLoading ? {} : { scale: 0.97 }}
-                        className="w-full py-4 text-[10px] tracking-[0.35em] uppercase font-medium border border-stone-700/60 text-stone-500 hover:bg-stone-100 hover:text-stone-900 hover:border-stone-100 transition-all duration-500 mt-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="w-full py-4 text-[10px] tracking-[0.35em] uppercase font-medium border border-stone-700/60 text-stone-400 hover:bg-stone-100 hover:text-stone-900 hover:border-stone-100 transition-all duration-500 mt-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         {wishLoading ? "Sending..." : "Send Wishes"}
                       </motion.button>
@@ -1300,8 +1300,8 @@ export default function WeddingPage() {
 
               {/* Wishes list */}
               <motion.div variants={fadeUp}>
-                <h3 className="text-[10px] tracking-[0.35em] uppercase text-stone-600 font-medium mb-8 flex items-center gap-3">
-                  Messages <span className="text-stone-800">({wishes.length})</span>
+                <h3 className="text-[10px] tracking-[0.35em] uppercase text-stone-400 font-medium mb-8 flex items-center gap-3">
+                  Messages <span className="text-stone-400">({wishes.length})</span>
                 </h3>
                 <div className="h-[420px] overflow-y-auto pr-3 space-y-7" style={{ scrollbarWidth: "thin", scrollbarColor: "#292524 transparent" }}>
                   {wishes.map((wish, i) => (
@@ -1310,15 +1310,15 @@ export default function WeddingPage() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.06, duration: 0.6, ease: "easeOut" }}
-                      className="border-b border-stone-800/30 pb-7 last:border-0"
+                      className="border-b border-stone-600/30 pb-7 last:border-0"
                     >
                       <div className="flex items-baseline gap-3 mb-2.5">
                         <h4 className="text-[10px] tracking-[0.2em] uppercase text-stone-400 font-medium">{wish.name}</h4>
-                        <span className="text-[9px] text-stone-700 uppercase tracking-wider">
+                        <span className="text-[9px] text-stone-400 uppercase tracking-wider">
                           {new Date(wish.created_at).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
                         </span>
                       </div>
-                      <p className="text-stone-500 font-light italic leading-relaxed" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.05rem" }}>
+                      <p className="text-stone-400 font-light italic leading-relaxed" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.05rem" }}>
                         &ldquo;{wish.message}&rdquo;
                       </p>
                     </motion.div>
@@ -1333,7 +1333,7 @@ export default function WeddingPage() {
         <section className="py-24 px-6 text-center" style={{ background: "linear-gradient(to bottom, #080808, #040404)" }}>
           <Reveal className="max-w-xl mx-auto">
             <FloatingDiamond size={14} className="text-amber-400/20 mx-auto mb-8" />
-            <p className="text-sm text-stone-600 font-light leading-relaxed italic mb-8">
+            <p className="text-sm text-stone-400 font-light leading-relaxed italic mb-8">
               It is an honor and happiness for us if you could bless our union.
               <br />With love, we sincerely thank you.
             </p>
@@ -1349,10 +1349,10 @@ export default function WeddingPage() {
         <footer className="py-10 text-center bg-[#040404] border-t border-white/[0.03]">
           <div className="flex items-center justify-center gap-5 mb-4">
             <div className="w-14 h-px bg-stone-900" />
-            <FloatingDiamond size={10} className="text-stone-800" />
+            <FloatingDiamond size={10} className="text-stone-400" />
             <div className="w-14 h-px bg-stone-900" />
           </div>
-          <p className="text-[9px] tracking-[0.35em] uppercase text-stone-800">June 14, 2026 · Jakarta, Indonesia</p>
+          <p className="text-[9px] tracking-[0.35em] uppercase text-stone-400">June 14, 2026 · Jakarta, Indonesia</p>
         </footer>
       </motion.div>
     </div>
