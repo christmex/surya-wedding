@@ -587,16 +587,46 @@ export default function WeddingPage() {
               initial="hidden"
               animate="visible"
             >
-              {/* Rotating diamond ornament */}
+              {/* Interlocked wedding rings */}
               <motion.div variants={fadeUp}>
-                <motion.svg width="64" height="64" viewBox="0 0 72 72" className="text-amber-400/25"
-                  animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.04, 0.97, 1] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}>
-                  <polygon points="36,2 70,36 36,70 2,36" stroke="currentColor" strokeWidth="0.7" fill="none" />
-                  <polygon points="36,12 60,36 36,60 12,36" stroke="currentColor" strokeWidth="0.4" fill="none" />
-                  <line x1="36" y1="2" x2="36" y2="70" stroke="currentColor" strokeWidth="0.3" opacity="0.4" />
-                  <line x1="2" y1="36" x2="70" y2="36" stroke="currentColor" strokeWidth="0.3" opacity="0.4" />
-                  <circle cx="36" cy="36" r="2.5" fill="currentColor" opacity="0.5" />
+                <motion.svg
+                  width="96" height="52" viewBox="0 0 96 52" fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  {/* Glow behind rings */}
+                  <ellipse cx="48" cy="26" rx="34" ry="16" fill="rgba(201,169,110,0.04)" />
+
+                  {/* Left ring shadow arc (behind right ring) */}
+                  <path
+                    d="M 14 26 A 20 20 0 1 1 54 26"
+                    stroke="rgba(201,169,110,0.18)" strokeWidth="1.4" fill="none"
+                    strokeLinecap="round"
+                  />
+                  {/* Right ring */}
+                  <circle cx="58" cy="26" r="20" stroke="rgba(201,169,110,0.45)" strokeWidth="1.4" fill="none" />
+                  {/* Left ring front arc (over right ring) */}
+                  <path
+                    d="M 14 26 A 20 20 0 1 0 54 26"
+                    stroke="rgba(201,169,110,0.45)" strokeWidth="1.4" fill="none"
+                    strokeLinecap="round"
+                  />
+
+                  {/* Inner shine — left ring */}
+                  <path d="M 20 14 A 14 14 0 0 1 32 8" stroke="rgba(255,240,200,0.25)" strokeWidth="0.6" fill="none" strokeLinecap="round"/>
+                  {/* Inner shine — right ring */}
+                  <path d="M 50 8 A 14 14 0 0 1 62 14" stroke="rgba(255,240,200,0.25)" strokeWidth="0.6" fill="none" strokeLinecap="round"/>
+
+                  {/* Small diamond gem at top-center overlap */}
+                  <polygon points="38,2 42,8 38,12 34,8" stroke="rgba(201,169,110,0.6)" strokeWidth="0.6" fill="rgba(201,169,110,0.12)" />
+                  <line x1="34" y1="8" x2="42" y2="8" stroke="rgba(201,169,110,0.35)" strokeWidth="0.4"/>
+                  <circle cx="38" cy="7" r="0.8" fill="rgba(255,240,200,0.5)" />
+
+                  {/* Sparkle dots */}
+                  <circle cx="10" cy="20" r="0.7" fill="rgba(201,169,110,0.3)" />
+                  <circle cx="86" cy="20" r="0.7" fill="rgba(201,169,110,0.3)" />
+                  <circle cx="48" cy="48" r="0.7" fill="rgba(201,169,110,0.2)" />
                 </motion.svg>
               </motion.div>
 
