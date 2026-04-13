@@ -298,9 +298,22 @@ function CopyButton({ value }: { value: string }) {
 }
 
 /* ── main component ───────────────────────────────────────── */
+// Deterministic overlay particles (no Math.random to avoid hydration mismatch)
+const OVERLAY_PARTICLES = Array.from({ length: 22 }, (_, i) => {
+  const seed = (i * 137.508 + 42) % 1;
+  const x = ((i * 47 + 11) % 97) + 1.5;
+  const y = ((i * 61 + 7) % 95) + 2.5;
+  const size = (i % 3 === 0) ? 1.5 : (i % 3 === 1) ? 2.5 : 1;
+  const dur = 6 + (i % 7) * 1.4;
+  const delay = (i * 0.4) % 5;
+  const drift = (i % 2 === 0 ? 1 : -1) * (10 + (i % 5) * 6);
+  return { x, y, size, dur, delay, drift, seed };
+});
+
 export default function WeddingPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [guestName, setGuestName] = useState("");
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [wishName, setWishName] = useState("");
   const [wishMessage, setWishMessage] = useState("");
@@ -352,6 +365,7 @@ export default function WeddingPage() {
   /* handlers */
   const handleOpen = () => {
     setIsOpen(true);
+    if (guestName.trim()) setWishName(guestName.trim());
     audioRef.current?.play().catch((e) => console.warn("Audio play failed:", e));
     setIsPlaying(true);
   };
@@ -429,73 +443,93 @@ export default function WeddingPage() {
         {!isOpen && (
           <motion.div
             key="overlay"
-            className="fixed inset-0 z-[100] bg-[#080808] flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[100] overflow-hidden flex flex-col items-center justify-center"
+            style={{ background: "#060606" }}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, ease: "easeInOut" }}
+            transition={{ duration: 1.6, ease: "easeInOut" }}
           >
-            {/* Radial glow */}
+            {/* ── Deep radial glow ── */}
             <motion.div
               className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse 90% 70% at 50% 50%, rgba(180,140,55,0.09) 0%, transparent 65%)",
-              }}
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              style={{ background: "radial-gradient(ellipse 80% 60% at 50% 55%, rgba(180,140,55,0.10) 0%, transparent 60%)" }}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
 
-            {/* Corner ornaments */}
-            {(["top-6 left-6", "top-6 right-6 rotate-90", "bottom-6 left-6 -rotate-90", "bottom-6 right-6 rotate-180"] as const).map((cls) => (
-              <div key={cls} className={`absolute ${cls} opacity-20`}>
-                <svg width="28" height="28" viewBox="0 0 28 28" className="text-amber-400" fill="none">
-                  <line x1="0" y1="0" x2="14" y2="0" stroke="currentColor" strokeWidth="0.6" />
-                  <line x1="0" y1="0" x2="0" y2="14" stroke="currentColor" strokeWidth="0.6" />
-                </svg>
-              </div>
+            {/* ── Floating particles ── */}
+            {OVERLAY_PARTICLES.map((p, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  left: `${p.x}%`,
+                  top: `${p.y}%`,
+                  width: p.size,
+                  height: p.size,
+                  background: i % 4 === 0 ? "rgba(201,169,110,0.55)" : "rgba(255,255,255,0.18)",
+                }}
+                animate={{
+                  y: [-10, -80 - p.drift, -10],
+                  x: [0, p.drift * 0.4, 0],
+                  opacity: [0, 0.8, 0],
+                  scale: [0.5, 1.2, 0.5],
+                }}
+                transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
+              />
             ))}
 
-            {/* Top line */}
-            <motion.div
-              className="absolute top-6 left-6 right-6 flex items-center gap-3 opacity-25"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-amber-400/50" />
-              <FloatingDiamond size={10} className="text-amber-400 shrink-0" />
-              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-amber-400/50" />
-            </motion.div>
+            {/* ── Animated diagonal line grid ── */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
+              {Array.from({ length: 12 }, (_, i) => (
+                <motion.line
+                  key={i}
+                  x1={`${(i * 9) - 5}%`} y1="0%"
+                  x2={`${(i * 9) + 15}%`} y2="100%"
+                  stroke="#c9a96e" strokeWidth="0.5"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 2.5, delay: 0.2 + i * 0.07, ease: "easeOut" }}
+                />
+              ))}
+            </svg>
 
-            {/* Bottom line */}
-            <motion.div
-              className="absolute bottom-6 left-6 right-6 flex items-center gap-3 opacity-25"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-amber-400/50" />
-              <FloatingDiamond size={10} className="text-amber-400 shrink-0" />
-              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-amber-400/50" />
-            </motion.div>
+            {/* ── Corner ornaments ── */}
+            {(["top-5 left-5", "top-5 right-5 rotate-90", "bottom-5 left-5 -rotate-90", "bottom-5 right-5 rotate-180"] as const).map((cls) => (
+              <motion.div key={cls} className={`absolute ${cls} opacity-25`}
+                initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 0.25, scale: 1 }}
+                transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}>
+                <svg width="32" height="32" viewBox="0 0 32 32" className="text-amber-400" fill="none">
+                  <line x1="0" y1="0" x2="16" y2="0" stroke="currentColor" strokeWidth="0.7" />
+                  <line x1="0" y1="0" x2="0" y2="16" stroke="currentColor" strokeWidth="0.7" />
+                  <circle cx="0" cy="0" r="1.5" fill="currentColor" opacity="0.6" />
+                </svg>
+              </motion.div>
+            ))}
 
-            {/* Content — staggered */}
+            {/* ── Top / bottom border lines ── */}
+            {(["top-5", "bottom-5"] as const).map((pos) => (
+              <motion.div key={pos} className={`absolute ${pos} left-5 right-5 flex items-center gap-3 opacity-20`}
+                initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+                transition={{ duration: 1.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent to-amber-400/60" />
+                <FloatingDiamond size={8} className="text-amber-400 shrink-0" />
+                <div className="flex-1 h-px bg-gradient-to-l from-transparent to-amber-400/60" />
+              </motion.div>
+            ))}
+
+            {/* ── Main content ── */}
             <motion.div
-              className="relative z-10 flex flex-col items-center text-center px-6 space-y-6 max-w-md"
-              variants={stagger(0.18, 0.2)}
+              className="relative z-10 flex flex-col items-center text-center px-6 space-y-5 max-w-sm w-full"
+              variants={stagger(0.16, 0.2)}
               initial="hidden"
               animate="visible"
             >
-              {/* Ornament */}
+              {/* Rotating diamond ornament */}
               <motion.div variants={fadeUp}>
-                <motion.svg
-                  width="72"
-                  height="72"
-                  viewBox="0 0 72 72"
-                  className="text-amber-400/25"
-                  animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.05, 0.97, 1] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                >
+                <motion.svg width="64" height="64" viewBox="0 0 72 72" className="text-amber-400/25"
+                  animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.04, 0.97, 1] }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}>
                   <polygon points="36,2 70,36 36,70 2,36" stroke="currentColor" strokeWidth="0.7" fill="none" />
                   <polygon points="36,12 60,36 36,60 12,36" stroke="currentColor" strokeWidth="0.4" fill="none" />
                   <line x1="36" y1="2" x2="36" y2="70" stroke="currentColor" strokeWidth="0.3" opacity="0.4" />
@@ -504,61 +538,78 @@ export default function WeddingPage() {
                 </motion.svg>
               </motion.div>
 
-              <motion.p
-                variants={fadeUp}
-                className="text-[10px] tracking-[0.5em] uppercase text-stone-600 font-medium"
-              >
+              <motion.p variants={fadeUp} className="text-[9px] tracking-[0.55em] uppercase text-stone-600 font-medium">
                 The Wedding of
               </motion.p>
 
-              {/* Cinematic line-by-line name reveal */}
+              {/* Cinematic name reveal */}
               <motion.h1
                 variants={stagger(0.25)}
                 className="text-stone-100 leading-none"
-                style={{
-                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                  fontSize: "clamp(3.5rem, 12vw, 7rem)",
-                  fontWeight: 300,
-                }}
+                style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(3rem, 11vw, 6rem)", fontWeight: 300 }}
               >
                 <span className="block overflow-hidden">
-                  <motion.span variants={lineReveal} className="block">
-                    Ardy Surya
-                  </motion.span>
+                  <motion.span variants={lineReveal} className="block">Ardy Surya</motion.span>
                 </span>
                 <span className="block overflow-hidden">
-                  <motion.span
-                    variants={lineReveal}
-                    className="block italic"
-                    style={{ color: "rgba(201, 169, 110, 0.75)", fontWeight: 300 }}
-                  >
+                  <motion.span variants={lineReveal} className="block italic" style={{ color: "rgba(201,169,110,0.8)", fontWeight: 300 }}>
                     &amp; Mila Arinda
                   </motion.span>
                 </span>
               </motion.h1>
 
-              <motion.div variants={fadeUp} className="flex items-center gap-5">
-                <div className="w-14 h-px bg-stone-800" />
-                <p className="text-[10px] tracking-[0.4em] uppercase text-stone-600">
-                  14 · 06 · 2026
-                </p>
-                <div className="w-14 h-px bg-stone-800" />
+              <motion.div variants={fadeUp} className="flex items-center gap-4">
+                <div className="w-10 h-px bg-stone-800" />
+                <p className="text-[9px] tracking-[0.45em] uppercase text-stone-600">14 · 06 · 2026</p>
+                <div className="w-10 h-px bg-stone-800" />
               </motion.div>
 
+              {/* ── Guest name input ── */}
+              <motion.div variants={fadeUp} className="w-full pt-2">
+                <p className="text-[8px] tracking-[0.45em] uppercase text-stone-700 mb-3">
+                  Kepada Yth.
+                </p>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter" && guestName.trim()) handleOpen(); }}
+                    placeholder="Your name"
+                    className="w-full bg-transparent border-b border-stone-800/70 pb-2.5 text-sm text-center text-stone-300 placeholder-stone-800 outline-none focus:border-amber-400/30 transition-colors duration-400"
+                    style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.1rem", letterSpacing: "0.05em" }}
+                  />
+                  <motion.div
+                    className="absolute bottom-0 left-0 h-px bg-amber-400/30"
+                    initial={{ scaleX: 0 }}
+                    whileFocus={{ scaleX: 1 }}
+                    style={{ transformOrigin: "left" }}
+                    transition={{ duration: 0.4 }}
+                  />
+                </div>
+                {guestName.trim() && (
+                  <motion.p
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-2 text-[9px] tracking-[0.25em] uppercase text-amber-400/50"
+                  >
+                    Welcome, {guestName.trim()}
+                  </motion.p>
+                )}
+              </motion.div>
+
+              {/* Open button */}
               <motion.button
                 variants={fadeUp}
                 onClick={handleOpen}
                 whileHover={{ scale: 1.04, borderColor: "rgba(245,245,230,0.8)", color: "#f5f5e6" }}
                 whileTap={{ scale: 0.97 }}
-                className="mt-4 px-10 py-3.5 text-[10px] tracking-[0.35em] uppercase border border-stone-700/60 text-stone-400 transition-colors duration-500 cursor-pointer"
+                className="mt-2 px-10 py-3.5 text-[10px] tracking-[0.35em] uppercase border border-stone-700/60 text-stone-400 transition-colors duration-500 cursor-pointer w-full"
               >
                 Open Invitation
               </motion.button>
 
-              <motion.p
-                variants={fadeUp}
-                className="text-[9px] tracking-[0.2em] uppercase text-stone-700"
-              >
+              <motion.p variants={fadeUp} className="text-[9px] tracking-[0.2em] uppercase text-stone-800">
                 ♪ With music
               </motion.p>
             </motion.div>
