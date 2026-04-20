@@ -957,7 +957,7 @@ export default function WeddingPage() {
         </section>
 
         {/* ── COUPLE ───────────────────────────────────────── */}
-        <section id="couple" className="py-32 px-6 bg-[#080808]">
+        <section id="couple" className="py-32 px-6 bg-[#080808]" style={{ scrollMarginTop: "64px" }}>
           <div className="max-w-5xl mx-auto">
             <Reveal className="text-center mb-24">
               <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">Two hearts, one destiny</p>
@@ -1059,7 +1059,7 @@ export default function WeddingPage() {
         </section>
 
         {/* ── SCHEDULE ─────────────────────────────────────── */}
-        <section id="schedule" className="py-32 px-6 border-y border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #0c0c0c, #080808)" }}>
+        <section id="schedule" className="py-32 px-6 border-y border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #0c0c0c, #080808)", scrollMarginTop: "64px" }}>
           <div className="max-w-4xl mx-auto">
             <Reveal className="text-center mb-20">
               <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">We await your presence</p>
@@ -1119,7 +1119,7 @@ export default function WeddingPage() {
         <section
           id="gallery"
           ref={gallerySectionRef}
-          style={{ height: "320vh", background: "#080808" }}
+          style={{ height: "320vh", background: "#080808", scrollMarginTop: "64px" }}
           className="border-t border-white/[0.04]"
         >
           <div className="sticky top-0 overflow-hidden" style={{ height: "100vh" }}>
@@ -1127,7 +1127,7 @@ export default function WeddingPage() {
             {/* Top bar */}
             <motion.div
               style={{ opacity: galleryLabelOpacity }}
-              className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-6 md:px-8 pt-8 md:pt-10"
+              className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-6 md:px-8 pt-20 md:pt-22"
             >
               <div>
                 <p className="text-[9px] tracking-[0.5em] uppercase text-stone-400 mb-1.5 mt-4">A glimpse into our story</p>
@@ -1228,7 +1228,7 @@ export default function WeddingPage() {
         </section>
 
         {/* ── GIFT ─────────────────────────────────────────── */}
-        <section id="gift" className="py-32 px-6 border-t border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #080808, #0c0c0c)" }}>
+        <section id="gift" className="py-32 px-6 border-t border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #080808, #0c0c0c)", scrollMarginTop: "64px" }}>
           <div className="max-w-3xl mx-auto">
             <Reveal className="text-center mb-16">
               <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">Your generosity means the world</p>
@@ -1293,7 +1293,7 @@ export default function WeddingPage() {
         </section>
 
         {/* ── WISHES ───────────────────────────────────────── */}
-        <section id="wishes" className="py-32 px-6 border-t border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #0c0c0c, #080808)" }}>
+        <section id="wishes" className="py-32 px-6 border-t border-white/[0.04]" style={{ background: "linear-gradient(to bottom, #0c0c0c, #080808)", scrollMarginTop: "64px" }}>
           <div className="max-w-5xl mx-auto">
             <Reveal className="text-center mb-20">
               <p className="text-[10px] tracking-[0.5em] uppercase text-stone-400 font-medium mb-4">Share your love</p>
