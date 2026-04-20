@@ -978,7 +978,7 @@ export default function WeddingPage() {
                 <div className="aspect-[3/4] overflow-hidden border border-stone-600/40" style={{ borderRadius: "50% 50% 50% 50% / 55% 55% 45% 45%" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <motion.img
-                    src="https://images.unsplash.com/photo-1594938298603-c8148c4b4e10?q=80&w=800&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1583939411023-14783179e581?q=80&w=800&auto=format&fit=crop"
                     alt="The Bride"
                     className="w-full h-full object-cover"
                     style={{ filter: "sepia(0.2) saturate(0.7) brightness(0.8)" }}
