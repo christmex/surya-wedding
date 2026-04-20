@@ -905,9 +905,9 @@ export default function WeddingPage() {
                 fontWeight: 300,
               }}
             >
-              "And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts."
+              "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It always protects, always trusts, always hopes, always perseveres. Love never fails."
             </p>
-            <p className="mt-5 text-[9px] tracking-[0.35em] uppercase text-stone-400">Ar-Rum : 21</p>
+            <p className="mt-5 text-[9px] tracking-[0.35em] uppercase text-stone-400">1 Corinthians 13 : 4 – 8</p>
           </Reveal>
         </section>
 
