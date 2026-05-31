@@ -1126,7 +1126,7 @@ export default function WeddingPage() {
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className={`group relative overflow-hidden${i === GALLERY_ITEMS.length - 1 ? " col-span-2 md:col-span-1 md:col-start-2" : ""}`}
+                  className={`group relative overflow-hidden${i === GALLERY_ITEMS.length - 1 ? " md:col-start-2" : ""}`}
                   style={{ aspectRatio: "2/3" }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
