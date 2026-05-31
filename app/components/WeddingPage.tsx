@@ -301,13 +301,16 @@ function CopyButton({ value }: { value: string }) {
 // Deterministic overlay particles (no Math.random to avoid hydration mismatch)
 /* ── Gallery items ────────────────────────────────────────── */
 const GALLERY_ITEMS = [
-  { src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700&auto=format&fit=crop", label: "First Meet",     w: 220, h: 330, yOffset:  30 },
-  { src: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=700&auto=format&fit=crop", label: "Falling In Love", w: 290, h: 210, yOffset: -30 },
-  { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=700&auto=format&fit=crop", label: "Engagement",     w: 200, h: 390, yOffset:  60 },
-  { src: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=700&auto=format&fit=crop", label: "Pre-Wedding",    w: 310, h: 250, yOffset: -50 },
-  { src: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=700&auto=format&fit=crop", label: "The Ceremony",   w: 240, h: 370, yOffset:  20 },
-  { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=700&auto=format&fit=crop", label: "Reception",      w: 270, h: 290, yOffset: -20 },
-  { src: "https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=700&auto=format&fit=crop", label: "Forever After",  w: 225, h: 345, yOffset:  45 },
+  { src: "/images/prewedding-bench.jpg",    label: "First Meet" },
+  { src: "/images/prewedding-walk.jpg",     label: "Falling In Love" },
+  { src: "/images/prewedding-hug.jpg",      label: "Engagement" },
+  { src: "/images/prewedding-apart.jpg",    label: "Pre-Wedding" },
+  { src: "/images/prewedding-dance.jpg",    label: "Together" },
+  { src: "/images/prewedding-field.jpg",    label: "Us" },
+  { src: "/images/prewedding-portrait.jpg", label: "Forever" },
+  { src: "/images/prewedding-motion.jpg",   label: "Always" },
+  { src: "/images/prewedding-laugh.jpg",    label: "Joy" },
+  { src: "/images/prewedding-feet.jpg",     label: "Our Path" },
 ];
 
 const OVERLAY_PARTICLES = Array.from({ length: 22 }, (_, i) => {
@@ -336,9 +339,7 @@ export default function WeddingPage() {
   const [wishSuccess, setWishSuccess] = useState(false);
   const [wishError, setWishError] = useState(false);
   const [wishLoading, setWishLoading] = useState(false);
-  const [hoveredGallery, setHoveredGallery] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const gallerySectionRef = useRef<HTMLElement>(null);
   const countdown = useCountdown();
 
   // Scroll-based parallax for hero
@@ -347,21 +348,6 @@ export default function WeddingPage() {
   const heroBgY = useSpring(rawHeroBgY, { stiffness: 50, damping: 18 });
   const rawHeroTextY = useTransform(scrollY, [0, 700], [0, -80]);
   const heroTextY = useSpring(rawHeroTextY, { stiffness: 50, damping: 18 });
-
-  // Gallery horizontal scroll — dynamic translation based on actual track width
-  const galleryTrackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: galleryProgress } = useScroll({
-    target: gallerySectionRef,
-    offset: ["start start", "end end"],
-  });
-  // useTransform with a function reads trackRef.current at runtime → works on any viewport
-  const rawGalleryX = useTransform(galleryProgress, (p) => {
-    if (!galleryTrackRef.current) return 0;
-    const dist = Math.max(0, galleryTrackRef.current.scrollWidth - window.innerWidth);
-    return -dist * p;
-  });
-  const galleryTrackX = useSpring(rawGalleryX, { stiffness: 55, damping: 22 });
-  const galleryLabelOpacity = useTransform(galleryProgress, [0, 0.05], [0, 1]);
 
   /* lock body scroll during overlay */
   useEffect(() => {
@@ -803,7 +789,7 @@ export default function WeddingPage() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop"
+              src="/images/prewedding-field.jpg"
               alt=""
               aria-hidden="true"
               className="w-full h-full object-cover"
@@ -978,7 +964,7 @@ export default function WeddingPage() {
                 <div className="aspect-[3/4] overflow-hidden border border-stone-600/40" style={{ borderRadius: "50% 50% 50% 50% / 55% 55% 45% 45%" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <motion.img
-                    src="https://images.unsplash.com/photo-1583939411023-14783179e581?q=80&w=800&auto=format&fit=crop"
+                    src="/images/bride.jpg"
                     alt="The Bride"
                     className="w-full h-full object-cover"
                     style={{ filter: "sepia(0.2) saturate(0.7) brightness(0.8)" }}
@@ -1031,7 +1017,7 @@ export default function WeddingPage() {
                 <div className="aspect-[3/4] overflow-hidden border border-stone-600/40" style={{ borderRadius: "50% 50% 50% 50% / 55% 55% 45% 45%" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <motion.img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
+                    src="/images/groom.jpg"
                     alt="The Groom"
                     className="w-full h-full object-cover"
                     style={{ filter: "sepia(0.2) saturate(0.7) brightness(0.8)" }}
@@ -1115,115 +1101,45 @@ export default function WeddingPage() {
           </div>
         </section>
 
-        {/* ── GALLERY — scroll-driven horizontal timeline (all screens) ── */}
+        {/* ── GALLERY — photo grid ── */}
         <section
           id="gallery"
-          ref={gallerySectionRef}
-          style={{ height: "320vh", background: "#080808", scrollMarginTop: "64px" }}
-          className="border-t border-white/[0.04]"
+          style={{ background: "#080808", scrollMarginTop: "64px" }}
+          className="py-24 px-6 border-t border-white/[0.04]"
         >
-          <div className="sticky top-0 overflow-hidden" style={{ height: "100vh" }}>
+          <div className="max-w-6xl mx-auto">
+            <Reveal className="text-center mb-14">
+              <p className="text-[9px] tracking-[0.5em] uppercase text-stone-400 mb-2">A glimpse into our story</p>
+              <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#f0ece4" }}>
+                Our Moments
+              </h2>
+            </Reveal>
 
-            {/* Top bar */}
             <motion.div
-              style={{ opacity: galleryLabelOpacity }}
-              className="absolute top-0 left-0 right-0 z-10 flex items-end justify-between px-6 md:px-8 pt-20 md:pt-22"
+              className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={stagger(0.06)}
             >
-              <div>
-                <p className="text-[9px] tracking-[0.5em] uppercase text-stone-400 mb-1.5 mt-4">A glimpse into our story</p>
-                <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "clamp(1.4rem, 2.5vw, 2.4rem)", fontWeight: 300, color: "#f0ece4" }}>
-                  Our Moments
-                </h2>
-              </div>
-              <p className="text-[8px] tracking-[0.3em] uppercase text-stone-200 mb-1">Scroll →</p>
+              {GALLERY_ITEMS.map((item, i) => (
+                <motion.div
+                  key={i}
+                  variants={fadeUp}
+                  className={`group relative overflow-hidden${i === GALLERY_ITEMS.length - 1 ? " col-span-2 md:col-span-1 md:col-start-2" : ""}`}
+                  style={{ aspectRatio: "2/3" }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.src}
+                    alt={item.label}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    style={{ filter: "sepia(0.1) saturate(0.8) brightness(0.85)" }}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500" />
+                </motion.div>
+              ))}
             </motion.div>
-
-            {/* Horizontal track — width computed at runtime so it works on any screen */}
-            <motion.div
-              ref={galleryTrackRef}
-              style={{
-                x: galleryTrackX,
-                position: "absolute",
-                top: 0,
-                paddingLeft: "8vw",
-                paddingRight: "15vw",
-                paddingTop: "100px",
-                paddingBottom: "80px",
-                gap: "clamp(20px, 3vw, 48px)",
-                display: "flex",
-                alignItems: "center",
-                height: "100%",
-              }}
-            >
-              {GALLERY_ITEMS.map((item, i) => {
-                // Scale image dimensions for mobile
-                const scale = 0.72;
-                const w = Math.round(item.w * scale);
-                const h = Math.round(item.h * scale);
-                const yOff = Math.round(item.yOffset * 0.6);
-                return (
-                  <motion.div
-                    key={i}
-                    className="flex-shrink-0 flex flex-col cursor-pointer"
-                    initial={{ opacity: 0, y: yOff + 40 }}
-                    animate={{
-                      opacity: hoveredGallery === null ? 1 : hoveredGallery === i ? 1 : 0.35,
-                      y: yOff,
-                      scale: hoveredGallery === null ? 1 : hoveredGallery === i ? 1.06 : 0.93,
-                      filter: hoveredGallery !== null && hoveredGallery !== i ? "blur(1.5px)" : "blur(0px)",
-                    }}
-                    transition={{
-                      opacity: { duration: hoveredGallery !== null ? 0.35 : 1.0, delay: hoveredGallery !== null ? 0 : i * 0.08 },
-                      y: { duration: 1.1, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] },
-                      scale: { duration: 0.4, ease: "easeOut" },
-                      filter: { duration: 0.4, ease: "easeOut" },
-                    }}
-                    onHoverStart={() => setHoveredGallery(i)}
-                    onHoverEnd={() => setHoveredGallery(null)}
-                  >
-                    {/* Image — use clamp to scale nicely on both mobile and desktop */}
-                    <div
-                      className="overflow-hidden"
-                      style={{
-                        width: `clamp(${w}px, ${(item.w / 1440) * 100}vw, ${item.w}px)`,
-                        height: `clamp(${h}px, ${(item.h / 900) * 100}vh, ${item.h}px)`,
-                        flexShrink: 0,
-                      }}
-                    >
-                      <motion.img
-                        src={item.src} alt={item.label}
-                        className="w-full h-full object-cover"
-                        animate={{ scale: hoveredGallery === i ? 1.08 : 1 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                      />
-                    </div>
-                    {/* Label */}
-                    <div className="mt-3 md:mt-4">
-                      <p className="text-[7px] md:text-[8px] tracking-[0.4em] uppercase mb-0.5"
-                        style={{ color: hoveredGallery === i ? "#a8a29e" : "#a8a29e" }}>
-                        0{i + 1}
-                      </p>
-                      <p className="leading-none whitespace-nowrap transition-colors duration-300"
-                        style={{
-                          fontFamily: "var(--font-cormorant), serif",
-                          fontSize: "clamp(0.85rem, 1.5vw, 1.4rem)",
-                          fontWeight: 300,
-                          letterSpacing: "0.02em",
-                          color: hoveredGallery === i ? "#a8a29e" : "#a8a29e",
-                        }}>
-                        {item.label}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-
-            {/* Progress bar */}
-            <div className="absolute bottom-4 left-6 right-6 flex items-center gap-4">
-              <motion.div className="h-px bg-stone-600/60 flex-1 origin-left" style={{ scaleX: galleryProgress }} />
-              <span className="text-[7px] md:text-[8px] tracking-[0.3em] uppercase text-stone-400 shrink-0">{GALLERY_ITEMS.length} moments</span>
-            </div>
           </div>
         </section>
 
