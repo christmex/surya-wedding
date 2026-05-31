@@ -982,10 +982,6 @@ export default function WeddingPage() {
                   <p className="italic text-stone-400 text-xs">Daughter of:</p>
                   <p>Bapak Budi Prasetyo &amp; Ibu Ngatemi</p>
                 </div>
-                <div className="flex items-center gap-3 pt-2 justify-center md:justify-start">
-                  <div className="w-8 h-px bg-stone-600" />
-                  <span className="text-[9px] tracking-[0.2em] uppercase text-stone-400">@milaarinda</span>
-                </div>
               </motion.div>
             </motion.div>
 
@@ -1034,10 +1030,6 @@ export default function WeddingPage() {
                 <div className="space-y-1 text-sm text-stone-400 font-light">
                   <p className="italic text-stone-400 text-xs">Son of:</p>
                   <p>Ibu Alm. Haryati</p>
-                </div>
-                <div className="flex items-center gap-3 pt-2 justify-center md:justify-end">
-                  <span className="text-[9px] tracking-[0.2em] uppercase text-stone-400">@ardysurya</span>
-                  <div className="w-8 h-px bg-stone-600" />
                 </div>
               </motion.div>
             </motion.div>
