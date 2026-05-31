@@ -16,7 +16,7 @@ import {
 } from "framer-motion";
 
 /* ── constants ────────────────────────────────────────────── */
-const WEDDING_DATE = new Date("2026-06-14T10:00:00");
+const WEDDING_DATE = new Date("2026-07-18T09:00:00");
 
 // Deterministic bokeh dots (no Math.random — avoids hydration mismatch)
 const BOKEH = [
@@ -641,7 +641,7 @@ export default function WeddingPage() {
 
               <motion.div variants={fadeUp} className="flex items-center gap-4">
                 <div className="w-10 h-px bg-stone-600" />
-                <p className="text-[9px] tracking-[0.45em] uppercase text-stone-400">14 · 06 · 2026</p>
+                <p className="text-[9px] tracking-[0.45em] uppercase text-stone-400">18 · 07 · 2026</p>
                 <div className="w-10 h-px bg-stone-600" />
               </motion.div>
 
@@ -853,12 +853,12 @@ export default function WeddingPage() {
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-stone-400">
               <span className="flex items-center gap-2">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                Sunday, June 14, 2026
+                Saturday, July 18, 2026
               </span>
               <div className="hidden sm:block w-1 h-1 rounded-full bg-stone-700" />
               <span className="flex items-center gap-2">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Grand Ballroom, Jakarta
+                GITJ Jerukwangi, Jepara
               </span>
             </motion.div>
           </motion.div>
@@ -980,7 +980,7 @@ export default function WeddingPage() {
                 </h2>
                 <div className="space-y-1 text-sm text-stone-400 font-light">
                   <p className="italic text-stone-400 text-xs">Daughter of:</p>
-                  <p>Bapak Ahmad Rahmad &amp; Ibu Siti Nurhasanah</p>
+                  <p>Bapak Budi Prasetyo &amp; Ibu Ngatemi</p>
                 </div>
                 <div className="flex items-center gap-3 pt-2 justify-center md:justify-start">
                   <div className="w-8 h-px bg-stone-600" />
@@ -1033,7 +1033,7 @@ export default function WeddingPage() {
                 </h2>
                 <div className="space-y-1 text-sm text-stone-400 font-light">
                   <p className="italic text-stone-400 text-xs">Son of:</p>
-                  <p>Bapak Hendra Pratama &amp; Ibu Dewi Lestari</p>
+                  <p>Ibu Alm. Haryati</p>
                 </div>
                 <div className="flex items-center gap-3 pt-2 justify-center md:justify-end">
                   <span className="text-[9px] tracking-[0.2em] uppercase text-stone-400">@ardysurya</span>
@@ -1065,16 +1065,16 @@ export default function WeddingPage() {
                 {
                   icon: (<><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>),
                   label: "Holy Matrimony",
-                  day: "Saturday, June 13th, 2026",
+                  day: "Saturday, 18 July 2026",
                   time: "09:00 WIB",
-                  venue: "Masjid Istiqlal, Jakarta Pusat",
+                  venue: "GITJ Jerukwangi, Jepara",
                 },
                 {
                   icon: (<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>),
                   label: "Wedding Reception",
-                  day: "Sunday, June 14th, 2026",
-                  time: "11:00 – 15:00 WIB",
-                  venue: "Grand Ballroom, Hotel Mulia, Jakarta",
+                  day: "Saturday, 18 July 2026",
+                  time: "12:00 – 15:00 WIB",
+                  venue: "Mila's Home",
                 },
               ].map((ev) => (
                 <motion.div
@@ -1164,8 +1164,8 @@ export default function WeddingPage() {
               viewport={{ once: true, margin: "-60px" }}
             >
               {[
-                { bank: "Bank Central Asia (BCA)", name: "Ardy Surya", number: "1234 5678 90", raw: "1234567890" },
-                { bank: "Mandiri", name: "Mila Arinda", number: "0987 6543 21", raw: "0987654321" },
+                { bank: "Bank Central Asia (BCA)", name: "Ardy Surya", number: "1790 2390 63", raw: "1790239063" },
+                { bank: "Bank Mandiri", name: "Mila Arinda", number: "1840 0057 4912 0", raw: "18400057491200" },
               ].map((acc) => (
                 <motion.div
                   key={acc.name}
@@ -1343,7 +1343,7 @@ export default function WeddingPage() {
             <FloatingDiamond size={10} className="text-stone-400" />
             <div className="w-14 h-px bg-stone-900" />
           </div>
-          <p className="text-[9px] tracking-[0.35em] uppercase text-stone-400">June 14, 2026 · Jakarta, Indonesia</p>
+          <p className="text-[9px] tracking-[0.35em] uppercase text-stone-400">18 July 2026 · Jepara</p>
         </footer>
       </motion.div>
     </div>
