@@ -1060,6 +1060,7 @@ export default function WeddingPage() {
                   day: "Saturday, 18 July 2026",
                   time: "09:00 WIB",
                   venue: "GITJ Jerukwangi, Jepara",
+                  map: "https://maps.app.goo.gl/VwtVBWR2fe1PQx5i9",
                 },
                 {
                   icon: (<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>),
@@ -1067,6 +1068,7 @@ export default function WeddingPage() {
                   day: "Saturday, 18 July 2026",
                   time: "12:00 – 15:00 WIB",
                   venue: "Mila's Home",
+                  map: "https://www.google.com/maps/place/6%C2%B029'42.2%22S+110%C2%B043'12.3%22E/@-6.495066,110.7174951,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-6.495066!4d110.72007?entry=ttu",
                 },
               ].map((ev) => (
                 <motion.div
@@ -1086,7 +1088,7 @@ export default function WeddingPage() {
                   <p className="text-[10px] tracking-[0.2em] uppercase text-stone-400 font-medium mb-1">{ev.day}</p>
                   <p className="text-sm text-stone-400 font-light mb-5">{ev.time}</p>
                   <p className="text-sm text-stone-400 font-light leading-relaxed mb-6 max-w-[260px]">{ev.venue}</p>
-                  <a href="#" className="text-[9px] tracking-[0.3em] uppercase text-stone-400 border-b border-stone-600/60 pb-0.5 hover:text-amber-400/60 hover:border-amber-400/30 transition-colors">View on Map</a>
+                  <a href={ev.map} target="_blank" rel="noopener noreferrer" className="text-[9px] tracking-[0.3em] uppercase text-stone-400 border-b border-stone-600/60 pb-0.5 hover:text-amber-400/60 hover:border-amber-400/30 transition-colors">View on Map</a>
                 </motion.div>
               ))}
             </motion.div>
