@@ -462,7 +462,7 @@ export default function WeddingPage() {
         {!isOpen && (
           <motion.div
             key="overlay"
-            className="fixed inset-0 z-[100] overflow-hidden flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[100] overflow-hidden"
             style={{ background: "#060606" }}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -566,9 +566,11 @@ export default function WeddingPage() {
               </motion.div>
             ))}
 
-            {/* ── Main content ── */}
+            {/* ── Main content (scrollable wrapper: centers when it fits, scrolls when it doesn't — never clipped) ── */}
+            <div className="absolute inset-0 overflow-y-auto">
+            <div className="min-h-full flex flex-col items-center justify-center px-6 py-12">
             <motion.div
-              className="relative z-10 flex flex-col items-center text-center px-6 space-y-5 max-w-sm w-full"
+              className="relative z-10 flex flex-col items-center text-center space-y-4 max-w-sm w-full"
               variants={stagger(0.16, 0.2)}
               initial="hidden"
               animate="visible"
@@ -702,6 +704,8 @@ export default function WeddingPage() {
                 ♪ With Love
               </motion.p>
             </motion.div>
+            </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1060,7 +1064,7 @@ export default function WeddingPage() {
                   day: "Saturday, 18 July 2026",
                   time: "09:00 WIB",
                   venue: "GITJ Jerukwangi, Jepara",
-                  map: "https://maps.app.goo.gl/VwtVBWR2fe1PQx5i9",
+                  map: "https://maps.app.goo.gl/eA94tJi3HC79uUBP7",
                 },
                 {
                   icon: (<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>),
