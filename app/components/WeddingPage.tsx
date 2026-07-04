@@ -568,9 +568,9 @@ export default function WeddingPage() {
 
             {/* ── Main content (scrollable wrapper: centers when it fits, scrolls when it doesn't — never clipped) ── */}
             <div className="absolute inset-0 overflow-y-auto">
-            <div className="min-h-full flex flex-col items-center justify-center px-6 py-12">
+            <div className="min-h-full flex flex-col items-center justify-center px-6 py-6">
             <motion.div
-              className="relative z-10 flex flex-col items-center text-center space-y-4 max-w-sm w-full"
+              className="relative z-10 flex flex-col items-center text-center space-y-3 max-w-xl w-full"
               variants={stagger(0.16, 0.2)}
               initial="hidden"
               animate="visible"
@@ -695,7 +695,7 @@ export default function WeddingPage() {
                 onClick={handleOpen}
                 whileHover={{ scale: 1.04, borderColor: "rgba(245,245,230,0.8)", color: "#f5f5e6" }}
                 whileTap={{ scale: 0.97 }}
-                className="mt-2 px-10 py-3.5 text-[10px] tracking-[0.35em] uppercase border border-stone-700/60 text-stone-400 transition-colors duration-500 cursor-pointer w-full"
+                className="mt-2 px-10 py-3.5 text-[10px] tracking-[0.35em] uppercase border border-stone-700/60 text-stone-400 transition-colors duration-500 cursor-pointer w-full max-w-sm"
               >
                 Open Invitation
               </motion.button>
