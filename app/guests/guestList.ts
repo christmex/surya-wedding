@@ -184,4 +184,9 @@ export const GUEST_NAMES: string[] = [
   "Bu Julia",
   "Mas Dani",
   "Tama",
+
+  "Mas Ian",
+  "Elang Maulana",
+  "Yakub",
+  "Yoga",
 ];
