@@ -10,11 +10,12 @@ const PAGE_SIZE = 20;
 const GROUP_CODES = ["BN", "STCA", "URCL", "URC"];
 const TRAILING_GROUP_CODE = new RegExp(`\\s+(?:${GROUP_CODES.join("|")})$`, "i");
 
-const WHATSAPP_TEMPLATE_DEFAULT =
-  "Halo {nama},\n\n" +
-  "Dengan penuh sukacita, kami mengundang Anda untuk hadir di hari bahagia pernikahan kami. " +
-  "Berikut undangan digitalnya:\n{link}\n\n" +
-  "Merupakan suatu kehormatan bagi kami atas kehadiran dan doa restu Anda. Terima kasih.";
+const INVITATION_TEMPLATE_DEFAULT =
+  "Dengan penuh rasa syukur, kami mengundang Bapak/Ibu/Saudara/i untuk hadir serta memberikan doa restu pada hari bahagia pernikahan kami.\n\n" +
+  "Untuk melihat detail acara, silakan membuka undangan digital melalui tautan berikut:\n\n" +
+  "{link}\n\n" +
+  "Merupakan kebahagiaan yang tak ternilai bagi kami apabila Bapak/Ibu/Saudara/i dapat berkenan hadir.\n" +
+  "Terima kasih atas doa dan restunya.";
 
 /** Strip a trailing group code (e.g. "Sherly BN" → "Sherly") for the guest-facing greeting. */
 function cleanName(name: string): string {
@@ -26,21 +27,24 @@ function buildInviteUrl(baseUrl: string, guestName: string): string {
   return `${normalizedBase}/?to=${encodeURIComponent(guestName)}`;
 }
 
-function buildWhatsappUrl(template: string, displayName: string, inviteUrl: string): string {
-  const message = template.replaceAll("{nama}", displayName).replaceAll("{link}", inviteUrl);
+function buildMessage(template: string, displayName: string, inviteUrl: string): string {
+  return template.replaceAll("{nama}", displayName).replaceAll("{link}", inviteUrl);
+}
+
+function buildWhatsappUrl(message: string): string {
   return `https://wa.me/?text=${encodeURIComponent(message)}`;
 }
 
-function CopyLinkButton({ url }: { url: string }) {
+function CopyMessageButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(text);
     } catch {
       // Fallback for browsers without the async clipboard API.
       const textarea = document.createElement("textarea");
-      textarea.value = url;
+      textarea.value = text;
       textarea.style.position = "fixed";
       textarea.style.opacity = "0";
       document.body.appendChild(textarea);
@@ -74,7 +78,7 @@ function CopyLinkButton({ url }: { url: string }) {
             <rect x="9" y="9" width="13" height="13" rx="2" />
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
           </svg>
-          Salin Link
+          Salin Undangan
         </>
       )}
     </button>
@@ -85,7 +89,7 @@ export default function GuestLinkManager() {
   const [baseUrl, setBaseUrl] = useState("");
   const [query, setQuery] = useState("");
   const [cleanCodes, setCleanCodes] = useState(false);
-  const [template, setTemplate] = useState(WHATSAPP_TEMPLATE_DEFAULT);
+  const [template, setTemplate] = useState(INVITATION_TEMPLATE_DEFAULT);
   const [showTemplate, setShowTemplate] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -119,8 +123,8 @@ export default function GuestLinkManager() {
             Generator Link Tamu
           </h1>
           <p className="mt-2 text-xs text-stone-500 leading-relaxed">
-            Klik <span className="text-stone-300">Salin Link</span> untuk menyalin URL undangan tiap tamu,
-            atau <span className="text-stone-300">WhatsApp</span> untuk langsung mengirim.
+            Klik <span className="text-stone-300">Salin Undangan</span> untuk menyalin teks undangan lengkap tiap tamu,
+            atau <span className="text-stone-300">WA</span> untuk langsung mengirim.
           </p>
         </header>
 
@@ -156,7 +160,7 @@ export default function GuestLinkManager() {
             onClick={() => setShowTemplate((previous) => !previous)}
             className="self-start text-[10px] tracking-[0.2em] uppercase text-stone-500 hover:text-amber-300 transition-colors cursor-pointer"
           >
-            {showTemplate ? "− Sembunyikan pesan WhatsApp" : "+ Ubah pesan WhatsApp"}
+            {showTemplate ? "− Sembunyikan pesan undangan" : "+ Ubah pesan undangan"}
           </button>
 
           {showTemplate && (
@@ -164,7 +168,7 @@ export default function GuestLinkManager() {
               <textarea
                 value={template}
                 onChange={(event) => setTemplate(event.target.value)}
-                rows={6}
+                rows={9}
                 className="w-full bg-transparent border border-stone-700/70 px-4 py-3 text-xs text-stone-300 outline-none focus:border-amber-400/40 transition-colors leading-relaxed"
               />
               <p className="mt-1 text-[10px] text-stone-600">
@@ -198,12 +202,13 @@ export default function GuestLinkManager() {
           {pageGuests.map((name) => {
             const displayName = cleanCodes ? cleanName(name) : name;
             const inviteUrl = buildInviteUrl(baseUrl, displayName);
-            const whatsappUrl = buildWhatsappUrl(template, displayName, inviteUrl);
+            const message = buildMessage(template, displayName, inviteUrl);
+            const whatsappUrl = buildWhatsappUrl(message);
 
             return (
               <li
                 key={name}
-                className="flex items-center gap-3 border border-white/[0.06] bg-white/[0.015] px-4 py-3 hover:border-white/[0.12] transition-colors"
+                className="flex flex-col gap-3 sm:flex-row sm:items-center border border-white/[0.06] bg-white/[0.015] px-4 py-3 hover:border-white/[0.12] transition-colors"
               >
                 <div className="min-w-0 flex-1">
                   <p className="text-sm text-stone-100 truncate" title={name}>
@@ -214,6 +219,7 @@ export default function GuestLinkManager() {
                   </p>
                 </div>
 
+                <div className="flex items-center gap-2 shrink-0">
                 <a
                   href={whatsappUrl}
                   target="_blank"
@@ -227,7 +233,8 @@ export default function GuestLinkManager() {
                   WA
                 </a>
 
-                <CopyLinkButton url={inviteUrl} />
+                <CopyMessageButton text={message} />
+                </div>
               </li>
             );
           })}
