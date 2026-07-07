@@ -18,9 +18,24 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ardysurya.id"),
   title: "Ardy Surya & Mila Arinda — Wedding Invitation",
   description:
-    "Join us in celebrating the wedding of Ardy Surya & Mila Arinda on June 14, 2026 in Jakarta, Indonesia.",
+    "Join us in celebrating the wedding of Ardy Surya & Mila Arinda on July 18, 2026 in Jepara, Indonesia.",
+  openGraph: {
+    title: "Ardy Surya & Mila Arinda — Wedding Invitation",
+    description:
+      "Join us in celebrating the wedding of Ardy Surya & Mila Arinda on July 18, 2026 in Jepara, Indonesia.",
+    type: "website",
+    locale: "id_ID",
+    siteName: "Ardy Surya & Mila Arinda",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ardy Surya & Mila Arinda — Wedding Invitation",
+    description:
+      "Join us in celebrating the wedding of Ardy Surya & Mila Arinda on July 18, 2026 in Jepara, Indonesia.",
+  },
 };
 
 export default function RootLayout({
